@@ -5,6 +5,7 @@
 package trabalhopoo2.guis;
 
 import java.awt.BorderLayout;
+import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
@@ -13,7 +14,7 @@ import javax.swing.JLabel;
  * @author lucik
  */
 public class TelaInicio extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaInicio.class.getName());
 
     /**
@@ -21,6 +22,16 @@ public class TelaInicio extends javax.swing.JFrame {
      */
     public TelaInicio() {
         initComponents();
+        ImageIcon icon = new ImageIcon(getClass().getResource("/imgs/game_image_menu.png"));
+
+        Image img = icon.getImage();
+        Image newImg = img.getScaledInstance(imagemLabel.getWidth(), imagemLabel.getHeight(), Image.SCALE_SMOOTH);
+
+// Define o ícone redimensionado
+        imagemLabel.setIcon(new ImageIcon(newImg));
+
+        // Adiciona o JLabel ao JFrame
+        add(imagemLabel, BorderLayout.CENTER);
     }
 
     /**
@@ -34,6 +45,7 @@ public class TelaInicio extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        imagemLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -48,12 +60,15 @@ public class TelaInicio extends javax.swing.JFrame {
             }
         });
 
+        imagemLabel.setText("jLabel2");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(259, 259, 259)
+                .addComponent(imagemLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(23, 23, 23)
                 .addComponent(jLabel1)
                 .addContainerGap(276, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -64,9 +79,12 @@ public class TelaInicio extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(98, 98, 98)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 329, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(98, 98, 98)
+                        .addComponent(jLabel1))
+                    .addComponent(imagemLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 292, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(102, 102, 102))
         );
@@ -106,6 +124,7 @@ public class TelaInicio extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel imagemLabel;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables

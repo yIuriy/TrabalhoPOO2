@@ -182,7 +182,7 @@ public class TelaJogo extends javax.swing.JFrame {
     }//GEN-LAST:event_posicao0MouseClicked
 
     private void posicao1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_posicao1MouseClicked
-        throw new JogadaInvalidaException("Erro");
+        
     }//GEN-LAST:event_posicao1MouseClicked
 
     private void posicao2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_posicao2MouseClicked
