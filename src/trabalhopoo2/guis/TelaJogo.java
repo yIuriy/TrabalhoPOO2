@@ -4,7 +4,13 @@
  */
 package trabalhopoo2.guis;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JLabel;
+import trabalhopoo2.Posicao;
 import trabalhopoo2.Tabuleiro;
+import trabalhopoo2.exceptions.JogadaInvalidaException;
+import trabalhopoo2.model.Carcara;
 
 /**
  *
@@ -13,13 +19,23 @@ import trabalhopoo2.Tabuleiro;
 public class TelaJogo extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaJogo.class.getName());
+    private final Tabuleiro tabuleiro;
+    private final List<JLabel> labelsPosicoes = new ArrayList<>();
 
     /**
      * Creates new form TelaJogo
      */
     public TelaJogo() {
         initComponents();
-        Tabuleiro tabuleiro = new Tabuleiro();
+        tabuleiro = new Tabuleiro();
+        labelsPosicoes.addAll(
+                List.of(posicao0,
+                        posicao1,
+                        posicao2,
+                        posicao3,
+                        posicao4,
+                        posicao5)
+        );
     }
 
     /**
@@ -32,43 +48,22 @@ public class TelaJogo extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        posicao2 = new javax.swing.JLabel();
         posicao0 = new javax.swing.JLabel();
-        posicao3 = new javax.swing.JLabel();
         posicao1 = new javax.swing.JLabel();
-        posicao5 = new javax.swing.JLabel();
+        posicao2 = new javax.swing.JLabel();
+        posicao3 = new javax.swing.JLabel();
         posicao4 = new javax.swing.JLabel();
+        posicao5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        posicao2.setBackground(new java.awt.Color(255, 255, 255));
-        posicao2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        posicao2.setText("0");
-        posicao2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        posicao2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                posicao2MouseClicked(evt);
-            }
-        });
 
         posicao0.setBackground(new java.awt.Color(255, 255, 255));
         posicao0.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         posicao0.setText("Cabrito");
         posicao0.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        posicao0.setPreferredSize(new java.awt.Dimension(2060, 2050));
         posicao0.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 posicao0MouseClicked(evt);
-            }
-        });
-
-        posicao3.setBackground(new java.awt.Color(255, 255, 255));
-        posicao3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        posicao3.setText("0");
-        posicao3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        posicao3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                posicao3MouseClicked(evt);
             }
         });
 
@@ -76,29 +71,50 @@ public class TelaJogo extends javax.swing.JFrame {
         posicao1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         posicao1.setText("Carcara");
         posicao1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        posicao1.setPreferredSize(new java.awt.Dimension(2060, 2050));
         posicao1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 posicao1MouseClicked(evt);
             }
         });
 
-        posicao5.setBackground(new java.awt.Color(255, 255, 255));
-        posicao5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        posicao5.setText("0");
-        posicao5.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        posicao5.addMouseListener(new java.awt.event.MouseAdapter() {
+        posicao2.setBackground(new java.awt.Color(255, 255, 255));
+        posicao2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        posicao2.setText("2");
+        posicao2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        posicao2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                posicao5MouseClicked(evt);
+                posicao2MouseClicked(evt);
+            }
+        });
+
+        posicao3.setBackground(new java.awt.Color(255, 255, 255));
+        posicao3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        posicao3.setText("3");
+        posicao3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        posicao3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                posicao3MouseClicked(evt);
             }
         });
 
         posicao4.setBackground(new java.awt.Color(255, 255, 255));
         posicao4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        posicao4.setText("0");
+        posicao4.setText("4");
         posicao4.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
         posicao4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 posicao4MouseClicked(evt);
+            }
+        });
+
+        posicao5.setBackground(new java.awt.Color(255, 255, 255));
+        posicao5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        posicao5.setText("5");
+        posicao5.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        posicao5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                posicao5MouseClicked(evt);
             }
         });
 
@@ -107,39 +123,38 @@ public class TelaJogo extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(207, Short.MAX_VALUE)
+                .addContainerGap(176, Short.MAX_VALUE)
+                .addComponent(posicao1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(71, 71, 71)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(posicao1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(81, 81, 81)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(posicao0, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(posicao2, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(81, 81, 81)
-                                .addComponent(posicao3, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(196, 196, 196))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(posicao4, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(82, 82, 82)
-                        .addComponent(posicao5, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(277, 277, 277))))
+                    .addComponent(posicao0, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(posicao2, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(70, 70, 70)
+                        .addComponent(posicao3, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(248, 248, 248))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(262, 262, 262)
+                .addComponent(posicao4, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(91, 91, 91)
+                .addComponent(posicao5, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(71, 71, 71)
+                .addGap(89, 89, 89)
                 .addComponent(posicao0, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46)
+                .addGap(51, 51, 51)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(posicao3, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(posicao2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(posicao1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(posicao3, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(46, 46, 46)
+                    .addComponent(posicao1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(52, 52, 52)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(posicao5, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(posicao4, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(257, Short.MAX_VALUE))
+                    .addComponent(posicao4, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(posicao5, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(228, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -156,29 +171,35 @@ public class TelaJogo extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void posicao2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_posicao2MouseClicked
-        
-    }//GEN-LAST:event_posicao2MouseClicked
-
     private void posicao0MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_posicao0MouseClicked
-        // TODO add your handling code here:
+        if (tabuleiro.obterAnimalDaJogada() instanceof Carcara) {
+            Posicao posCarcara = tabuleiro.obterPosicaoCarcara();
+
+        } else {
+
+        }
+        reposicionarAnimais();
     }//GEN-LAST:event_posicao0MouseClicked
+
+    private void posicao1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_posicao1MouseClicked
+        throw new JogadaInvalidaException("Erro");
+    }//GEN-LAST:event_posicao1MouseClicked
+
+    private void posicao2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_posicao2MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_posicao2MouseClicked
 
     private void posicao3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_posicao3MouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_posicao3MouseClicked
 
-    private void posicao1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_posicao1MouseClicked
+    private void posicao4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_posicao4MouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_posicao1MouseClicked
+    }//GEN-LAST:event_posicao4MouseClicked
 
     private void posicao5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_posicao5MouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_posicao5MouseClicked
-
-    private void posicao4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_posicao4MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_posicao4MouseClicked
 
     /**
      * @param args the command line arguments
@@ -215,7 +236,22 @@ public class TelaJogo extends javax.swing.JFrame {
     private javax.swing.JLabel posicao5;
     // End of variables declaration//GEN-END:variables
 
-    private int pegarPosicaoDoCabrito() {
+    public void reposicionarAnimais() {
+        posicao0.setText("0");
+        posicao1.setText("1");
+        posicao2.setText("2");
+        posicao3.setText("3");
+        posicao4.setText("4");
+        posicao5.setText("5");
 
+        int posicaoCarcara = tabuleiro.getPosicoes().indexOf(tabuleiro.obterPosicaoCarcara());
+        int posicaoCabrito = tabuleiro.getPosicoes().indexOf(tabuleiro.obterPosicaoCabrito());
+
+        setarTexto(posicaoCarcara, "Carcara");
+        setarTexto(posicaoCabrito, "Cabrito");
+    }
+
+    private void setarTexto(int posicao, String nomeAnimal) {
+        labelsPosicoes.get(posicao).setText(nomeAnimal);
     }
 }

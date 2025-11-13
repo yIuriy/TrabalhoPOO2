@@ -27,6 +27,20 @@ public class Tabuleiro {
         configurarPosicoes();
     }
 
+    public Animal obterAnimalDaJogada() {
+        if (jogadas % 2 == 0) {
+            System.out.println("CABRITO");
+            return cabrito;
+        } else {
+            System.out.println("CARCARA");
+            return carcara;
+        }
+    }
+
+    public void incrementarJogada() {
+        jogadas++;
+    }
+
     public boolean podeMover(Animal animal, int posicaoDesejada) {
         return false;
     }
@@ -61,5 +75,12 @@ public class Tabuleiro {
         return null;
     }
 
-    
+    public List<Posicao> getPosicoes() {
+        return posicoes;
+    }
+
+    public boolean tentarMoverAnimal() {
+            
+    }
+
 }

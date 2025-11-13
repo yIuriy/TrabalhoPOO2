@@ -33,4 +33,13 @@ public final class Posicao {
     public void setAnimal(Animal animal) {
         this.animal = animal;
     }
+
+    public boolean verificarSeJogadaEValida(int posicaoDesejada) {
+        for (Integer posicaoValida : posicoesValidas) {
+            if (posicaoValida == posicaoDesejada) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
