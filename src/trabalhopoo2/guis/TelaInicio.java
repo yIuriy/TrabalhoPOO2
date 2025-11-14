@@ -4,34 +4,59 @@
  */
 package trabalhopoo2.guis;
 
+import trabalhopoo2.components.JPanelComImagem;
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.GraphicsEnvironment;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.BorderFactory;
+import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.LayoutStyle;
+import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.WindowConstants;
+import trabalhopoo2.utils.Utilitarios;
 
 /**
  *
- * @author lucik
+ * @author Iuri
+ * @author Dyonathan
  */
 public class TelaInicio extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaInicio.class.getName());
 
+    private Font font8Bit;
+    private Utilitarios util;
+
     /**
      * Creates new form TelaInicio
      */
     public TelaInicio() {
+        util = new Utilitarios();
         initComponents();
-        ImageIcon icon = new ImageIcon(getClass().getResource("/imgs/game_image_menu.png"));
-
-        Image img = icon.getImage();
-        Image newImg = img.getScaledInstance(imagemLabel.getWidth(), imagemLabel.getHeight(), Image.SCALE_SMOOTH);
-
-// Define o ícone redimensionado
-        imagemLabel.setIcon(new ImageIcon(newImg));
-
-        // Adiciona o JLabel ao JFrame
-        add(imagemLabel, BorderLayout.CENTER);
+        configurarJPanelComImagem();
+        font8Bit = util.configurarFonte8Bit();
+        util.configurarBotao(btnJogar);
+        util.setarFont(lblTitulo, 40f, font8Bit);
+        util.setarFont(btnJogar, 24f, font8Bit);
+        UIManager.put("Button.arc", 0);
+        UIManager.put("Component.arc", 0);
     }
 
     /**
@@ -43,89 +68,108 @@ public class TelaInicio extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        imagemLabel = new javax.swing.JLabel();
+        lblTitulo = new JLabel();
+        btnJogar = new JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setBackground(new java.awt.Color(255, 255, 255));
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new Color(255, 255, 255));
+        setMaximumSize(new Dimension(800, 600));
+        setResizable(false);
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        jLabel1.setText("CORRE CABRITO");
+        lblTitulo.setBackground(new Color(0, 0, 0));
+        lblTitulo.setFont(new Font("sansserif", 0, 48)); // NOI18N
+        lblTitulo.setForeground(new Color(255, 255, 255));
+        lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
+        lblTitulo.setText("Corre Cabrito");
+        lblTitulo.setInheritsPopupMenu(false);
+        lblTitulo.setPreferredSize(new Dimension(500, 100));
 
-        jButton1.setText("JOGAR");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+        btnJogar.setBackground(new Color(61, 74, 155));
+        btnJogar.setForeground(new Color(255, 255, 255));
+        btnJogar.setText("JOGAR");
+        btnJogar.setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0)));
+        btnJogar.setBorderPainted(false);
+        btnJogar.setDefaultCapable(false);
+        btnJogar.setPreferredSize(new Dimension(74, 23));
+        btnJogar.addMouseListener(new MouseAdapter() {
+            public void mouseEntered(MouseEvent evt) {
+                btnJogarMouseEntered(evt);
+            }
+            public void mouseExited(MouseEvent evt) {
+                btnJogarMouseExited(evt);
+            }
+        });
+        btnJogar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                btnJogarActionPerformed(evt);
             }
         });
 
-        imagemLabel.setText("jLabel2");
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(imagemLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23)
-                .addComponent(jLabel1)
-                .addContainerGap(276, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(357, 357, 357))
+                .addComponent(lblTitulo, GroupLayout.DEFAULT_SIZE, 794, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(306, 306, 306)
+                .addComponent(btnJogar, GroupLayout.PREFERRED_SIZE, 187, GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(98, 98, 98)
-                        .addComponent(jLabel1))
-                    .addComponent(imagemLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 292, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(102, 102, 102))
+                .addGap(76, 76, 76)
+                .addComponent(lblTitulo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 324, Short.MAX_VALUE)
+                .addComponent(btnJogar, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+                .addGap(60, 60, 60))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnJogarActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnJogarActionPerformed
         TelaJogo tj = new TelaJogo();
         tj.setVisible(true);
         dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnJogarActionPerformed
+
+    private void btnJogarMouseEntered(MouseEvent evt) {//GEN-FIRST:event_btnJogarMouseEntered
+        btnJogar.setBorder(javax.swing.BorderFactory.createLineBorder(Color.BLACK, 2));
+        btnJogar.setForeground(Color.BLACK);
+        btnJogar.revalidate();
+        btnJogar.repaint();
+    }//GEN-LAST:event_btnJogarMouseEntered
+
+    private void btnJogarMouseExited(MouseEvent evt) {//GEN-FIRST:event_btnJogarMouseExited
+        btnJogar.setBorder(javax.swing.BorderFactory.createLineBorder(Color.WHITE, 2));
+        btnJogar.setForeground(Color.WHITE);
+        btnJogar.revalidate();
+        btnJogar.repaint();
+    }//GEN-LAST:event_btnJogarMouseExited
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new TelaInicio().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel imagemLabel;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
+    private JButton btnJogar;
+    private JLabel lblTitulo;
     // End of variables declaration//GEN-END:variables
+    private void configurarJPanelComImagem() {
+        System.out.println(getClass().getResource("/resources/imgs/game_image_menu.png"));
+
+        JPanelComImagem panelComImagem = new JPanelComImagem(new ImageIcon(getClass().getResource("/resources/imgs/game_image_menu.png")));
+
+        getContentPane().setLayout(new BorderLayout());
+        getContentPane().add(panelComImagem, BorderLayout.CENTER);
+
+        revalidate();
+        repaint();
+    }
 }

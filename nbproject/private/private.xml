@@ -3,14 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/lucik/Faculdade/2_Semestre/POO/TrabalhoPOO2/README.md</file>
             <file>file:/C:/Users/lucik/Faculdade/2_Semestre/POO/TrabalhoPOO2/src/trabalhopoo2/Tabuleiro.java</file>
-            <file>file:/C:/Users/lucik/Faculdade/2_Semestre/POO/TrabalhoPOO2/src/trabalhopoo2/model/Animal.java</file>
             <file>file:/C:/Users/lucik/Faculdade/2_Semestre/POO/TrabalhoPOO2/src/trabalhopoo2/Posicao.java</file>
-            <file>file:/C:/Users/lucik/Faculdade/2_Semestre/POO/TrabalhoPOO2/src/trabalhopoo2/model/Cabrito.java</file>
-            <file>file:/C:/Users/lucik/Faculdade/2_Semestre/POO/TrabalhoPOO2/src/trabalhopoo2/model/Carcara.java</file>
-            <file>file:/C:/Users/lucik/Faculdade/2_Semestre/POO/TrabalhoPOO2/src/trabalhopoo2/guis/TelaInicio.java</file>
             <file>file:/C:/Users/lucik/Faculdade/2_Semestre/POO/TrabalhoPOO2/src/trabalhopoo2/guis/TelaJogo.java</file>
+            <file>file:/C:/Users/lucik/Faculdade/2_Semestre/POO/TrabalhoPOO2/src/trabalhopoo2/guis/TelaInicio.java</file>
+            <file>file:/C:/Users/lucik/Faculdade/2_Semestre/POO/TrabalhoPOO2/src/trabalhopoo2/components/JPanelComImagem.java</file>
+            <file>file:/C:/Users/lucik/Faculdade/2_Semestre/POO/TrabalhoPOO2/src/trabalhopoo2/utils/Utilitarios.java</file>
         </group>
     </open-files>
 </project-private>
