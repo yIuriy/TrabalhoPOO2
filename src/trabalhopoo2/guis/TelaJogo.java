@@ -52,6 +52,8 @@ public class TelaJogo extends javax.swing.JFrame {
         util.setarFont(posicao3, 6f, font8Bit);
         util.setarFont(posicao4, 6f, font8Bit);
         util.setarFont(posicao5, 6f, font8Bit);
+        
+        reposicionarAnimais();
     }
 
     /**
@@ -83,7 +85,7 @@ public class TelaJogo extends javax.swing.JFrame {
 
         posicao0.setBackground(new java.awt.Color(255, 255, 255));
         posicao0.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        posicao0.setText("Cabrito");
+        posicao0.setText("0");
         posicao0.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
         posicao0.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -93,7 +95,7 @@ public class TelaJogo extends javax.swing.JFrame {
 
         posicao1.setBackground(new java.awt.Color(255, 255, 255));
         posicao1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        posicao1.setText("Carcara");
+        posicao1.setText("1");
         posicao1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
         posicao1.setPreferredSize(new java.awt.Dimension(2060, 2050));
         posicao1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -223,6 +225,8 @@ public class TelaJogo extends javax.swing.JFrame {
         if (tabuleiro.obterAnimalDaJogada() instanceof Carcara) {
             Posicao posCarcara = tabuleiro.obterPosicaoCarcara();
 
+            
+            
         } else {
 
         }
