@@ -53,8 +53,8 @@ public class Tabuleiro {
         posicoes.add(new Posicao(List.of(1, 2, 5)));
         posicoes.add(new Posicao(List.of(2, 3, 4)));
 
-        posicoes.get(3).setAnimal(cabrito);
-        posicoes.get(5).setAnimal(carcara);
+        posicoes.get(0).setAnimal(cabrito);
+        posicoes.get(1).setAnimal(carcara);
     }
 
     public Posicao obterPosicaoCabrito() {
@@ -80,7 +80,12 @@ public class Tabuleiro {
     }
 
     public boolean tentarMoverAnimal() {
+        
+        if(){
+            
         return true;
+        }
+        return false;
     }
     
 
