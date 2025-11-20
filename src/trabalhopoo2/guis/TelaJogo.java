@@ -73,7 +73,7 @@ public class TelaJogo extends javax.swing.JFrame {
         panelTabuleiro.setBorder(new EmptyBorder(5, 5, 5, 5));
         panelTabuleiro.setOpaque(false);
 
-        panelComImagem = new JPanelComImagem(new ImageIcon(getClass().getResource("/resources/imgs/montanha.png")));
+        panelComImagem = new JPanelComImagem(new ImageIcon(getClass().getResource("/resources/imgs/montanha_com_linhas.png")));
         configurarJPanelComImagem();
     }
 
