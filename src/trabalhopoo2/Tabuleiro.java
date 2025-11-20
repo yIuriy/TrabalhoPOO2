@@ -80,13 +80,7 @@ public class Tabuleiro {
     }
 
     public boolean tentarMoverAnimal() {
-        
-        if(){
-            
-        return true;
-        }
         return false;
     }
-    
 
 }

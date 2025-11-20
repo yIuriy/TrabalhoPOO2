@@ -4,14 +4,24 @@
  */
 package trabalhopoo2.guis;
 
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import trabalhopoo2.Posicao;
 import trabalhopoo2.Tabuleiro;
-import trabalhopoo2.exceptions.JogadaInvalidaException;
+import trabalhopoo2.components.BordaCircular;
+import trabalhopoo2.components.BtnDefault;
+import trabalhopoo2.components.PainelCentralizado;
 import trabalhopoo2.model.Carcara;
 import trabalhopoo2.utils.Utilitarios;
 
@@ -26,6 +36,7 @@ public class TelaJogo extends javax.swing.JFrame {
     private final List<JLabel> labelsPosicoes = new ArrayList<>();
     private final Font font8Bit;
     private final Utilitarios util;
+    private final Container containerInicial;
 
     /**
      * Creates new form TelaJogo
@@ -33,6 +44,7 @@ public class TelaJogo extends javax.swing.JFrame {
     public TelaJogo() {
         util = new Utilitarios();
         initComponents();
+        containerInicial = getContentPane();
         tabuleiro = new Tabuleiro();
         labelsPosicoes.addAll(
                 List.of(posicao0,
@@ -44,16 +56,26 @@ public class TelaJogo extends javax.swing.JFrame {
         );
         menuBar.setLayout(new FlowLayout(FlowLayout.RIGHT));
         font8Bit = util.configurarFonte8Bit();
-        util.setarFont(jMenu1, 12f, font8Bit);
-        util.setarFont(jMenu2, 12f, font8Bit);
+        util.setarFont(btnJogo, 12f, font8Bit);
+        util.setarFont(btnAutoria, 12f, font8Bit);
         util.setarFont(posicao0, 6f, font8Bit);
         util.setarFont(posicao1, 6f, font8Bit);
         util.setarFont(posicao2, 6f, font8Bit);
         util.setarFont(posicao3, 6f, font8Bit);
         util.setarFont(posicao4, 6f, font8Bit);
         util.setarFont(posicao5, 6f, font8Bit);
-        
+
         reposicionarAnimais();
+        tornarLabelsCirculares();
+
+    }
+
+    private void tornarLabelsCirculares() {
+        posicao0.setBorder(new BordaCircular());
+
+        Icon icon = new ImageIcon(getClass().getResource("/resources/imgs/game_image_menu.png"));
+              
+        posicao0.setIcon(icon);
     }
 
     /**
@@ -65,8 +87,8 @@ public class TelaJogo extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
+        panelPrincipal = new javax.swing.JPanel();
+        panelTabuleiro = new javax.swing.JPanel();
         posicao0 = new javax.swing.JLabel();
         posicao1 = new javax.swing.JLabel();
         posicao2 = new javax.swing.JLabel();
@@ -74,14 +96,14 @@ public class TelaJogo extends javax.swing.JFrame {
         posicao5 = new javax.swing.JLabel();
         posicao3 = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
+        btnJogo = new javax.swing.JMenu();
+        btnAutoria = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel2.setMaximumSize(new java.awt.Dimension(800, 600));
+        panelTabuleiro.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        panelTabuleiro.setMaximumSize(new java.awt.Dimension(800, 600));
 
         posicao0.setBackground(new java.awt.Color(255, 255, 255));
         posicao0.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -144,65 +166,75 @@ public class TelaJogo extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        javax.swing.GroupLayout panelTabuleiroLayout = new javax.swing.GroupLayout(panelTabuleiro);
+        panelTabuleiro.setLayout(panelTabuleiroLayout);
+        panelTabuleiroLayout.setHorizontalGroup(
+            panelTabuleiroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelTabuleiroLayout.createSequentialGroup()
                 .addComponent(posicao1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(89, 89, 89)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(panelTabuleiroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelTabuleiroLayout.createSequentialGroup()
                         .addComponent(posicao0, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGroup(panelTabuleiroLayout.createSequentialGroup()
                         .addComponent(posicao2, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(posicao3, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))))
-            .addGroup(jPanel2Layout.createSequentialGroup()
+            .addGroup(panelTabuleiroLayout.createSequentialGroup()
                 .addGap(86, 86, 86)
                 .addComponent(posicao4, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 92, Short.MAX_VALUE)
                 .addComponent(posicao5, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(84, 84, 84))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        panelTabuleiroLayout.setVerticalGroup(
+            panelTabuleiroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(panelTabuleiroLayout.createSequentialGroup()
                 .addComponent(posicao0, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(64, 64, 64)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(panelTabuleiroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(posicao1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(posicao2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(posicao3, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(panelTabuleiroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(posicao4, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(posicao5, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(203, 203, 203)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(177, Short.MAX_VALUE))
+        javax.swing.GroupLayout panelPrincipalLayout = new javax.swing.GroupLayout(panelPrincipal);
+        panelPrincipal.setLayout(panelPrincipalLayout);
+        panelPrincipalLayout.setHorizontalGroup(
+            panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelPrincipalLayout.createSequentialGroup()
+                .addGap(172, 172, 172)
+                .addComponent(panelTabuleiro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(208, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(119, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        panelPrincipalLayout.setVerticalGroup(
+            panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPrincipalLayout.createSequentialGroup()
+                .addContainerGap(121, Short.MAX_VALUE)
+                .addComponent(panelTabuleiro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(144, 144, 144))
         );
 
-        jMenu1.setText("File");
-        menuBar.add(jMenu1);
+        btnJogo.setText("Jogo");
+        btnJogo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnJogoMouseClicked(evt);
+            }
+        });
+        menuBar.add(btnJogo);
 
-        jMenu2.setText("Edit");
-        menuBar.add(jMenu2);
+        btnAutoria.setText("Autoria");
+        btnAutoria.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAutoriaMouseClicked(evt);
+            }
+        });
+        menuBar.add(btnAutoria);
 
         setJMenuBar(menuBar);
 
@@ -210,11 +242,11 @@ public class TelaJogo extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelPrincipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelPrincipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -225,8 +257,6 @@ public class TelaJogo extends javax.swing.JFrame {
         if (tabuleiro.obterAnimalDaJogada() instanceof Carcara) {
             Posicao posCarcara = tabuleiro.obterPosicaoCarcara();
 
-            
-            
         } else {
 
         }
@@ -253,6 +283,14 @@ public class TelaJogo extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_posicao5MouseClicked
 
+    private void btnJogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnJogoMouseClicked
+        configurarBotoesMenuJogo();
+    }//GEN-LAST:event_btnJogoMouseClicked
+
+    private void btnAutoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAutoriaMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAutoriaMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -262,11 +300,11 @@ public class TelaJogo extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JMenu btnAutoria;
+    private javax.swing.JMenu btnJogo;
     private javax.swing.JMenuBar menuBar;
+    private javax.swing.JPanel panelPrincipal;
+    private javax.swing.JPanel panelTabuleiro;
     private javax.swing.JLabel posicao0;
     private javax.swing.JLabel posicao1;
     private javax.swing.JLabel posicao2;
@@ -292,5 +330,46 @@ public class TelaJogo extends javax.swing.JFrame {
 
     private void setarTexto(int posicao, String nomeAnimal) {
         labelsPosicoes.get(posicao).setText(nomeAnimal);
+    }
+
+    private void configurarBotoesMenuJogo() {
+        JButton btnVoltar = new BtnDefault(24f, new Color(61, 74, 155), "Voltar", new Dimension(300, 70));
+        JButton btnReiniciar = new BtnDefault(24f, new Color(61, 74, 155), "Reiniciar", new Dimension(300, 70));
+        JButton btnSair = new BtnDefault(24f, new Color(61, 74, 155), "Sair", new Dimension(300, 70));
+
+        PainelCentralizado panel = new PainelCentralizado(List.of(
+                btnVoltar, btnReiniciar, btnSair
+        ));
+
+        this.setContentPane(panel);
+        this.revalidate();
+        this.repaint();
+
+        btnVoltar.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                setContentPane(containerInicial);
+                revalidate();
+                repaint();
+            }
+        }
+        );
+
+        btnReiniciar.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // TODO
+            }
+        }
+        );
+
+        btnSair.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                dispose();
+            }
+        }
+        );
+
     }
 }
