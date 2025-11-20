@@ -17,11 +17,11 @@ import trabalhopoo2.utils.Utilitarios;
  * @author Iuri
  */
 public class MenuItem extends JMenuItem {
-    
+
     private final Font font8Bit;
     private final Utilitarios util;
     private final JPopupMenu popUpMenu;
-    
+
     public MenuItem(String text, JPopupMenu popUpMenu) {
         super(text);
         util = new Utilitarios();
@@ -29,6 +29,5 @@ public class MenuItem extends JMenuItem {
         util.setarFont(this, 12f, font8Bit);
         this.setVerticalAlignment(CENTER);
         this.popUpMenu = popUpMenu;
-        
     }
 }

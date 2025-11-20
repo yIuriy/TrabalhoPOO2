@@ -31,7 +31,7 @@ public class PainelCentralizado extends JPanel {
         GridBagConstraints gridBagConstraints = new GridBagConstraints();
 
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.insets = new Insets(10, 0, 10, 0);
+        gridBagConstraints.insets = new Insets(20, 0, 10, 0);
         gridBagConstraints.ipady = 10;
 
         gridBagConstraints.fill = GridBagConstraints.NONE;

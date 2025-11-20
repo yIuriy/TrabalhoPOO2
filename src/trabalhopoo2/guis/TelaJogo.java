@@ -7,28 +7,24 @@ package trabalhopoo2.guis;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.Image;
-import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
-import javax.swing.UIManager;
-import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
-import javax.swing.plaf.metal.MetalBorders;
-import org.netbeans.lib.awtextra.AbsoluteLayout;
 import trabalhopoo2.Posicao;
 import trabalhopoo2.Tabuleiro;
 import trabalhopoo2.components.BordaCircular;
@@ -40,7 +36,7 @@ import trabalhopoo2.utils.Utilitarios;
 
 /**
  *
- * @author lucik
+ * @author Iuri
  */
 public class TelaJogo extends javax.swing.JFrame {
 
@@ -59,6 +55,7 @@ public class TelaJogo extends javax.swing.JFrame {
         util = new Utilitarios();
         initComponents();
         containerInicial = getContentPane();
+        font8Bit = util.configurarFonte8Bit();
         tabuleiro = new Tabuleiro();
         labelsPosicoes.addAll(
                 List.of(posicao0,
@@ -68,92 +65,16 @@ public class TelaJogo extends javax.swing.JFrame {
                         posicao4,
                         posicao5)
         );
-        configurarMenuBar();;
-        font8Bit = util.configurarFonte8Bit();
-        util.setarFont(btnJogo, 14f, font8Bit);
-        util.setarFont(btnAutoria, 14f, font8Bit);
-        util.setarFont(posicao0, 6f, font8Bit);
-        util.setarFont(posicao1, 6f, font8Bit);
-        util.setarFont(posicao2, 6f, font8Bit);
-        util.setarFont(posicao3, 6f, font8Bit);
-        util.setarFont(posicao4, 6f, font8Bit);
-        util.setarFont(posicao5, 6f, font8Bit);
-
+        configurarMenuBar();
         reposicionarAnimais();
         tornarLabelsCirculares();
-
-        posicao0.setAlignmentX(CENTER_ALIGNMENT);
-        posicao0.setAlignmentY(CENTER_ALIGNMENT);
+        configurarFontes();
 
         panelTabuleiro.setBorder(new EmptyBorder(5, 5, 5, 5));
+        panelTabuleiro.setOpaque(false);
 
-        panelTabuleiro.setBackground(util.COR_FUNDO);
         panelComImagem = new JPanelComImagem(new ImageIcon(getClass().getResource("/resources/imgs/montanha.png")));
         configurarJPanelComImagem();
-        
-        posicao0.setForeground(Color.red);
-
-    }
-
-    private void setarImagemCabra(int posicao) {
-        JLabel label = labelsPosicoes.get(posicao);
-        label.setText("");
-        Image icon = new ImageIcon(getClass().getResource("/resources/imgs/cabra.png")).
-                getImage().
-                getScaledInstance(50, 50, Image.SCALE_SMOOTH);
-
-        label.setIcon(new ImageIcon(icon));
-    }
-
-    private void setarImagemCarcara(int posicao) {
-        JLabel label = labelsPosicoes.get(posicao);
-        label.setText("");
-        Image icon = new ImageIcon(getClass().getResource("/resources/imgs/carcara.png")).
-                getImage().
-                getScaledInstance(50, 50, Image.SCALE_SMOOTH);
-
-        label.setIcon(new ImageIcon(icon));
-    }
-
-    private void configurarJPanelComImagem() {
-        getContentPane().setLayout(new BorderLayout());
-        getContentPane().add(panelComImagem, BorderLayout.CENTER);
-        revalidate();
-        repaint();
-    }
-
-    private void configurarMenuBar() {
-        FlowLayout fl = new FlowLayout(FlowLayout.RIGHT);
-        fl.setVgap(18);
-        fl.setHgap(20);
-        menuBar.setLayout(fl);
-        menuBar.setBackground(util.COR_FUNDO_MENU_BAR);
-
-        menuBar.setBorder(new MatteBorder(0, 0, 2, 0, new Color(63, 66, 85)));
-        menuBar.setPreferredSize(new Dimension(menuBar.getWidth(), 50));
-
-        btnJogo.setForeground(Color.WHITE);
-
-        btnJogo.setBorder(new EmptyBorder(0, 0, 0, 0));
-        btnAutoria.setForeground(Color.WHITE);
-        btnAutoria.setBorder(new EmptyBorder(0, 0, 0, 0));
-    }
-
-    private void tornarLabelsCirculares() {
-        configurarLabel(posicao0);
-        configurarLabel(posicao1);
-        configurarLabel(posicao2);
-        configurarLabel(posicao3);
-        configurarLabel(posicao4);
-        configurarLabel(posicao5);
-
-//        Icon icon = new ImageIcon(getClass().getResource("/resources/imgs/game_image_menu.png"));
-//        posicao0.setIcon(icon);
-    }
-
-    private void configurarLabel(JLabel label) {
-        label.setPreferredSize(new Dimension(50, 50));
-        label.setBorder(new BordaCircular());
     }
 
     /**
@@ -192,6 +113,11 @@ public class TelaJogo extends javax.swing.JFrame {
 
         panelTabuleiro.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         panelTabuleiro.setMaximumSize(new java.awt.Dimension(800, 600));
+        panelTabuleiro.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                panelTabuleiroMouseClicked(evt);
+            }
+        });
 
         posicao0.setBackground(new java.awt.Color(255, 255, 255));
         posicao0.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -277,18 +203,18 @@ public class TelaJogo extends javax.swing.JFrame {
             panelTabuleiroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelTabuleiroLayout.createSequentialGroup()
                 .addComponent(posicao1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(125, 125, 125)
+                .addGap(120, 120, 120)
                 .addGroup(panelTabuleiroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(posicao0, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
                     .addComponent(posicao2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 113, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 120, Short.MAX_VALUE)
                 .addComponent(posicao3, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(panelTabuleiroLayout.createSequentialGroup()
                 .addGap(77, 77, 77)
                 .addComponent(posicao4, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(posicao5, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(88, 88, 88))
+                .addGap(78, 78, 78))
         );
         panelTabuleiroLayout.setVerticalGroup(
             panelTabuleiroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -296,17 +222,20 @@ public class TelaJogo extends javax.swing.JFrame {
                 .addGroup(panelTabuleiroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelTabuleiroLayout.createSequentialGroup()
                         .addComponent(posicao0, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(64, 64, 64)
+                        .addGap(78, 78, 78)
                         .addComponent(posicao2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelTabuleiroLayout.createSequentialGroup()
                         .addGap(93, 93, 93)
                         .addGroup(panelTabuleiroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(posicao3, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(posicao1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
+                .addGap(117, 117, Short.MAX_VALUE))
+            .addGroup(panelTabuleiroLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panelTabuleiroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(posicao4, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(posicao5, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(posicao5, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(posicao4, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         btnJogo.setText("Jogo");
@@ -346,14 +275,14 @@ public class TelaJogo extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(190, 190, 190)
                 .addComponent(panelTabuleiro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(190, Short.MAX_VALUE))
+                .addContainerGap(195, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(133, 133, 133)
                 .addComponent(panelTabuleiro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(133, Short.MAX_VALUE))
+                .addContainerGap(129, Short.MAX_VALUE))
         );
 
         pack();
@@ -365,7 +294,7 @@ public class TelaJogo extends javax.swing.JFrame {
     }//GEN-LAST:event_btnJogoMouseClicked
 
     private void btnAutoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAutoriaMouseClicked
-        // TODO add your handling code here:
+        configurarNomes();
     }//GEN-LAST:event_btnAutoriaMouseClicked
 
     private void btnJogoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnJogoMouseEntered
@@ -412,7 +341,12 @@ public class TelaJogo extends javax.swing.JFrame {
 
         }
         reposicionarAnimais();
+
     }//GEN-LAST:event_posicao0MouseClicked
+
+    private void panelTabuleiroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelTabuleiroMouseClicked
+        System.out.println(evt.getPoint());
+    }//GEN-LAST:event_panelTabuleiroMouseClicked
 
     private void btnMenuEntered(JMenu btn) {
         btn.setForeground(new Color(247, 178, 104));
@@ -447,6 +381,55 @@ public class TelaJogo extends javax.swing.JFrame {
     private javax.swing.JLabel posicao5;
     // End of variables declaration//GEN-END:variables
 
+    private void configurarFontes() {
+        util.setarFont(btnJogo, 14f, font8Bit);
+        util.setarFont(btnAutoria, 14f, font8Bit);
+        util.setarFont(posicao0, 6f, font8Bit);
+        util.setarFont(posicao1, 6f, font8Bit);
+        util.setarFont(posicao2, 6f, font8Bit);
+        util.setarFont(posicao3, 6f, font8Bit);
+        util.setarFont(posicao4, 6f, font8Bit);
+        util.setarFont(posicao5, 6f, font8Bit);
+    }
+
+    private void configurarJPanelComImagem() {
+        getContentPane().setLayout(new BorderLayout());
+        getContentPane().add(panelComImagem, BorderLayout.CENTER);
+        revalidate();
+        repaint();
+    }
+
+    private void configurarMenuBar() {
+        FlowLayout fl = new FlowLayout(FlowLayout.RIGHT);
+        fl.setVgap(18);
+        fl.setHgap(20);
+        menuBar.setLayout(fl);
+        menuBar.setBackground(util.COR_FUNDO_MENU_BAR);
+
+        menuBar.setBorder(new MatteBorder(0, 0, 2, 0, new Color(63, 66, 85)));
+        menuBar.setPreferredSize(new Dimension(menuBar.getWidth(), 50));
+
+        btnJogo.setForeground(Color.WHITE);
+
+        btnJogo.setBorder(new EmptyBorder(0, 0, 0, 0));
+        btnAutoria.setForeground(Color.WHITE);
+        btnAutoria.setBorder(new EmptyBorder(0, 0, 0, 0));
+    }
+
+    private void tornarLabelsCirculares() {
+        configurarLabel(posicao0);
+        configurarLabel(posicao1);
+        configurarLabel(posicao2);
+        configurarLabel(posicao3);
+        configurarLabel(posicao4);
+        configurarLabel(posicao5);
+    }
+
+    private void configurarLabel(JLabel label) {
+        label.setPreferredSize(new Dimension(50, 50));
+        label.setBorder(new BordaCircular());
+    }
+
     public void reposicionarAnimais() {
         posicao0.setText("0");
         posicao1.setText("1");
@@ -466,6 +449,74 @@ public class TelaJogo extends javax.swing.JFrame {
 
     private void setarTexto(int posicao, String nomeAnimal) {
         labelsPosicoes.get(posicao).setText(nomeAnimal);
+    }
+
+    private void setarImagemCabra(int posicao) {
+        JLabel label = labelsPosicoes.get(posicao);
+        label.setText("");
+        Image icon = new ImageIcon(getClass().getResource("/resources/imgs/cabra.png")).
+                getImage().
+                getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+
+        label.setIcon(new ImageIcon(icon));
+    }
+
+    private void setarImagemCarcara(int posicao) {
+        JLabel label = labelsPosicoes.get(posicao);
+        label.setText("");
+        Image icon = new ImageIcon(getClass().getResource("/resources/imgs/carcara.png")).
+                getImage().
+                getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+
+        label.setIcon(new ImageIcon(icon));
+    }
+
+    private void configurarNomes() {
+        JButton btnVoltar = new BtnDefault(24f, util.COR_FUNDO_BTN, "Voltar", new Dimension(250, 50));
+
+        JLabel nomeDyonathan = new JLabel("Dyonathan Bento Laner");
+        JLabel nomeIuri = new JLabel("Iuri da Silva Fernandes");
+
+        PainelCentralizado panel = new PainelCentralizado(List.of(
+                nomeDyonathan, nomeIuri, btnVoltar
+        ));
+
+        util.setarFont(nomeDyonathan, 24f, font8Bit);
+        util.setarFont(nomeIuri, 24f, font8Bit);
+
+        nomeDyonathan.setForeground(Color.white);
+        nomeIuri.setForeground(Color.white);
+
+        panel.setBackground(util.COR_FUNDO);
+        this.setContentPane(panel);
+        this.revalidate();
+        this.repaint();
+
+        btnVoltar.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                setContentPane(containerInicial);
+                revalidate();
+                repaint();
+            }
+        }
+        );
+
+        nomeDyonathan.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                abrirUrl("https://github.com/yIuriy");
+            }
+        }
+        );
+
+        nomeIuri.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                abrirUrl("https://github.com/dyonathan-laner");
+            }
+        }
+        );
     }
 
     private void configurarBotoesMenuJogo() {
@@ -509,4 +560,15 @@ public class TelaJogo extends javax.swing.JFrame {
         );
 
     }
+
+    private void abrirUrl(String url) {
+        Desktop desktop = Desktop.getDesktop();
+
+        try {
+            desktop.browse(new URI(url));
+        } catch (IOException | URISyntaxException ex) {
+            System.getLogger(TelaJogo.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+    }
+
 }
