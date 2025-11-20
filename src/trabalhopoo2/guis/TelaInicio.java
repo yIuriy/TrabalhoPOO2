@@ -54,9 +54,9 @@ public class TelaInicio extends javax.swing.JFrame {
         initComponents();
         font8Bit = util.configurarFonte8Bit();
         panelComImagem = new JPanelComImagem(new ImageIcon(getClass().getResource("/resources/imgs/game_image_menu.png")));
-
+        
         configurarJPanelComImagem();
-        BtnDefault btn = new BtnDefault(24f, new Color(61, 74, 155), "Jogar", new Dimension(250, 60));
+        BtnDefault btn = new BtnDefault(24f, util.COR_FUNDO_BTN, "Jogar", new Dimension(250, 60));
 
         util.setarFont(lblTitulo, 40f, font8Bit);
 

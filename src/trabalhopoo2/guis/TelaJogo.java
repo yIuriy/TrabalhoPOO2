@@ -4,11 +4,16 @@
  */
 package trabalhopoo2.guis;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Image;
+import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -17,10 +22,18 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.UIManager;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.MatteBorder;
+import javax.swing.plaf.metal.MetalBorders;
+import org.netbeans.lib.awtextra.AbsoluteLayout;
 import trabalhopoo2.Posicao;
 import trabalhopoo2.Tabuleiro;
 import trabalhopoo2.components.BordaCircular;
 import trabalhopoo2.components.BtnDefault;
+import trabalhopoo2.components.JPanelComImagem;
 import trabalhopoo2.components.PainelCentralizado;
 import trabalhopoo2.model.Carcara;
 import trabalhopoo2.utils.Utilitarios;
@@ -37,6 +50,7 @@ public class TelaJogo extends javax.swing.JFrame {
     private final Font font8Bit;
     private final Utilitarios util;
     private final Container containerInicial;
+    private final JPanelComImagem panelComImagem;
 
     /**
      * Creates new form TelaJogo
@@ -54,10 +68,10 @@ public class TelaJogo extends javax.swing.JFrame {
                         posicao4,
                         posicao5)
         );
-        menuBar.setLayout(new FlowLayout(FlowLayout.RIGHT));
+        configurarMenuBar();;
         font8Bit = util.configurarFonte8Bit();
-        util.setarFont(btnJogo, 12f, font8Bit);
-        util.setarFont(btnAutoria, 12f, font8Bit);
+        util.setarFont(btnJogo, 14f, font8Bit);
+        util.setarFont(btnAutoria, 14f, font8Bit);
         util.setarFont(posicao0, 6f, font8Bit);
         util.setarFont(posicao1, 6f, font8Bit);
         util.setarFont(posicao2, 6f, font8Bit);
@@ -68,38 +82,112 @@ public class TelaJogo extends javax.swing.JFrame {
         reposicionarAnimais();
         tornarLabelsCirculares();
 
+        posicao0.setAlignmentX(CENTER_ALIGNMENT);
+        posicao0.setAlignmentY(CENTER_ALIGNMENT);
+
+        panelTabuleiro.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+        panelTabuleiro.setBackground(util.COR_FUNDO);
+        panelComImagem = new JPanelComImagem(new ImageIcon(getClass().getResource("/resources/imgs/montanha.png")));
+        configurarJPanelComImagem();
+        
+        posicao0.setForeground(Color.red);
+
+    }
+
+    private void setarImagemCabra(int posicao) {
+        JLabel label = labelsPosicoes.get(posicao);
+        label.setText("");
+        Image icon = new ImageIcon(getClass().getResource("/resources/imgs/cabra.png")).
+                getImage().
+                getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+
+        label.setIcon(new ImageIcon(icon));
+    }
+
+    private void setarImagemCarcara(int posicao) {
+        JLabel label = labelsPosicoes.get(posicao);
+        label.setText("");
+        Image icon = new ImageIcon(getClass().getResource("/resources/imgs/carcara.png")).
+                getImage().
+                getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+
+        label.setIcon(new ImageIcon(icon));
+    }
+
+    private void configurarJPanelComImagem() {
+        getContentPane().setLayout(new BorderLayout());
+        getContentPane().add(panelComImagem, BorderLayout.CENTER);
+        revalidate();
+        repaint();
+    }
+
+    private void configurarMenuBar() {
+        FlowLayout fl = new FlowLayout(FlowLayout.RIGHT);
+        fl.setVgap(18);
+        fl.setHgap(20);
+        menuBar.setLayout(fl);
+        menuBar.setBackground(util.COR_FUNDO_MENU_BAR);
+
+        menuBar.setBorder(new MatteBorder(0, 0, 2, 0, new Color(63, 66, 85)));
+        menuBar.setPreferredSize(new Dimension(menuBar.getWidth(), 50));
+
+        btnJogo.setForeground(Color.WHITE);
+
+        btnJogo.setBorder(new EmptyBorder(0, 0, 0, 0));
+        btnAutoria.setForeground(Color.WHITE);
+        btnAutoria.setBorder(new EmptyBorder(0, 0, 0, 0));
     }
 
     private void tornarLabelsCirculares() {
-        posicao0.setBorder(new BordaCircular());
+        configurarLabel(posicao0);
+        configurarLabel(posicao1);
+        configurarLabel(posicao2);
+        configurarLabel(posicao3);
+        configurarLabel(posicao4);
+        configurarLabel(posicao5);
 
-        Icon icon = new ImageIcon(getClass().getResource("/resources/imgs/game_image_menu.png"));
-              
-        posicao0.setIcon(icon);
+//        Icon icon = new ImageIcon(getClass().getResource("/resources/imgs/game_image_menu.png"));
+//        posicao0.setIcon(icon);
+    }
+
+    private void configurarLabel(JLabel label) {
+        label.setPreferredSize(new Dimension(50, 50));
+        label.setBorder(new BordaCircular());
     }
 
     /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
+     * This method is called from within the constructor to initialize the form. WARNING: Do NOT modify this code. The content of this method is always regenerated by the Form Editor.
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        panelPrincipal = new javax.swing.JPanel();
+        jDialog1 = new javax.swing.JDialog();
         panelTabuleiro = new javax.swing.JPanel();
         posicao0 = new javax.swing.JLabel();
         posicao1 = new javax.swing.JLabel();
         posicao2 = new javax.swing.JLabel();
         posicao4 = new javax.swing.JLabel();
-        posicao5 = new javax.swing.JLabel();
         posicao3 = new javax.swing.JLabel();
+        posicao5 = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
         btnJogo = new javax.swing.JMenu();
         btnAutoria = new javax.swing.JMenu();
 
+        javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
+        jDialog1.getContentPane().setLayout(jDialog1Layout);
+        jDialog1Layout.setHorizontalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        jDialog1Layout.setVerticalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(61, 110, 92));
         setResizable(false);
 
         panelTabuleiro.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -107,8 +195,10 @@ public class TelaJogo extends javax.swing.JFrame {
 
         posicao0.setBackground(new java.awt.Color(255, 255, 255));
         posicao0.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        posicao0.setText("0");
         posicao0.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        posicao0.setMaximumSize(new java.awt.Dimension(50, 50));
+        posicao0.setMinimumSize(new java.awt.Dimension(50, 50));
+        posicao0.setPreferredSize(new java.awt.Dimension(50, 50));
         posicao0.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 posicao0MouseClicked(evt);
@@ -119,7 +209,9 @@ public class TelaJogo extends javax.swing.JFrame {
         posicao1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         posicao1.setText("1");
         posicao1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        posicao1.setPreferredSize(new java.awt.Dimension(2060, 2050));
+        posicao1.setMaximumSize(new java.awt.Dimension(50, 50));
+        posicao1.setMinimumSize(new java.awt.Dimension(50, 50));
+        posicao1.setPreferredSize(new java.awt.Dimension(50, 50));
         posicao1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 posicao1MouseClicked(evt);
@@ -130,6 +222,9 @@ public class TelaJogo extends javax.swing.JFrame {
         posicao2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         posicao2.setText("2");
         posicao2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        posicao2.setMaximumSize(new java.awt.Dimension(50, 50));
+        posicao2.setMinimumSize(new java.awt.Dimension(50, 50));
+        posicao2.setPreferredSize(new java.awt.Dimension(50, 50));
         posicao2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 posicao2MouseClicked(evt);
@@ -140,19 +235,12 @@ public class TelaJogo extends javax.swing.JFrame {
         posicao4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         posicao4.setText("4");
         posicao4.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        posicao4.setMaximumSize(new java.awt.Dimension(50, 50));
+        posicao4.setMinimumSize(new java.awt.Dimension(50, 50));
+        posicao4.setPreferredSize(new java.awt.Dimension(50, 50));
         posicao4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 posicao4MouseClicked(evt);
-            }
-        });
-
-        posicao5.setBackground(new java.awt.Color(255, 255, 255));
-        posicao5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        posicao5.setText("5");
-        posicao5.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        posicao5.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                posicao5MouseClicked(evt);
             }
         });
 
@@ -160,9 +248,26 @@ public class TelaJogo extends javax.swing.JFrame {
         posicao3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         posicao3.setText("3");
         posicao3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        posicao3.setMaximumSize(new java.awt.Dimension(50, 50));
+        posicao3.setMinimumSize(new java.awt.Dimension(50, 50));
+        posicao3.setPreferredSize(new java.awt.Dimension(50, 50));
         posicao3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 posicao3MouseClicked(evt);
+            }
+        });
+
+        posicao5.setBackground(new java.awt.Color(255, 255, 255));
+        posicao5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        posicao5.setText("5");
+        posicao5.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        posicao5.setMaximumSize(new java.awt.Dimension(50, 50));
+        posicao5.setMinimumSize(new java.awt.Dimension(50, 50));
+        posicao5.setPreferredSize(new java.awt.Dimension(50, 50));
+        posicao5.setRequestFocusEnabled(false);
+        posicao5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                posicao5MouseClicked(evt);
             }
         });
 
@@ -171,59 +276,49 @@ public class TelaJogo extends javax.swing.JFrame {
         panelTabuleiroLayout.setHorizontalGroup(
             panelTabuleiroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelTabuleiroLayout.createSequentialGroup()
-                .addComponent(posicao1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(89, 89, 89)
-                .addGroup(panelTabuleiroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelTabuleiroLayout.createSequentialGroup()
-                        .addComponent(posicao0, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(panelTabuleiroLayout.createSequentialGroup()
-                        .addComponent(posicao2, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(posicao3, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addComponent(posicao1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(125, 125, 125)
+                .addGroup(panelTabuleiroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(posicao0, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
+                    .addComponent(posicao2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 113, Short.MAX_VALUE)
+                .addComponent(posicao3, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(panelTabuleiroLayout.createSequentialGroup()
-                .addGap(86, 86, 86)
-                .addComponent(posicao4, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 92, Short.MAX_VALUE)
-                .addComponent(posicao5, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(84, 84, 84))
+                .addGap(77, 77, 77)
+                .addComponent(posicao4, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(posicao5, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(88, 88, 88))
         );
         panelTabuleiroLayout.setVerticalGroup(
             panelTabuleiroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(panelTabuleiroLayout.createSequentialGroup()
-                .addComponent(posicao0, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(64, 64, 64)
-                .addGroup(panelTabuleiroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(posicao1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(posicao2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(posicao3, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
+                .addGroup(panelTabuleiroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelTabuleiroLayout.createSequentialGroup()
+                        .addComponent(posicao0, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(64, 64, 64)
+                        .addComponent(posicao2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelTabuleiroLayout.createSequentialGroup()
+                        .addGap(93, 93, 93)
+                        .addGroup(panelTabuleiroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(posicao3, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(posicao1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
                 .addGroup(panelTabuleiroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(posicao4, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(posicao5, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
-        );
-
-        javax.swing.GroupLayout panelPrincipalLayout = new javax.swing.GroupLayout(panelPrincipal);
-        panelPrincipal.setLayout(panelPrincipalLayout);
-        panelPrincipalLayout.setHorizontalGroup(
-            panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelPrincipalLayout.createSequentialGroup()
-                .addGap(172, 172, 172)
-                .addComponent(panelTabuleiro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(208, Short.MAX_VALUE))
-        );
-        panelPrincipalLayout.setVerticalGroup(
-            panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPrincipalLayout.createSequentialGroup()
-                .addContainerGap(121, Short.MAX_VALUE)
-                .addComponent(panelTabuleiro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(144, 144, 144))
         );
 
         btnJogo.setText("Jogo");
         btnJogo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnJogoMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnJogoMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnJogoMouseExited(evt);
             }
         });
         menuBar.add(btnJogo);
@@ -232,6 +327,12 @@ public class TelaJogo extends javax.swing.JFrame {
         btnAutoria.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnAutoriaMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnAutoriaMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnAutoriaMouseExited(evt);
             }
         });
         menuBar.add(btnAutoria);
@@ -242,16 +343,66 @@ public class TelaJogo extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelPrincipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(190, 190, 190)
+                .addComponent(panelTabuleiro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(190, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelPrincipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(133, 133, 133)
+                .addComponent(panelTabuleiro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(133, Short.MAX_VALUE))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnJogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnJogoMouseClicked
+        configurarBotoesMenuJogo();
+    }//GEN-LAST:event_btnJogoMouseClicked
+
+    private void btnAutoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAutoriaMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAutoriaMouseClicked
+
+    private void btnJogoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnJogoMouseEntered
+        btnMenuEntered(btnJogo);
+    }//GEN-LAST:event_btnJogoMouseEntered
+
+    private void btnJogoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnJogoMouseExited
+        btnMenuExited(btnJogo);
+    }//GEN-LAST:event_btnJogoMouseExited
+
+    private void btnAutoriaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAutoriaMouseEntered
+        btnMenuEntered(btnAutoria);
+    }//GEN-LAST:event_btnAutoriaMouseEntered
+
+    private void btnAutoriaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAutoriaMouseExited
+        btnMenuExited(btnAutoria);
+    }//GEN-LAST:event_btnAutoriaMouseExited
+
+    private void posicao5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_posicao5MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_posicao5MouseClicked
+
+    private void posicao3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_posicao3MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_posicao3MouseClicked
+
+    private void posicao4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_posicao4MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_posicao4MouseClicked
+
+    private void posicao2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_posicao2MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_posicao2MouseClicked
+
+    private void posicao1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_posicao1MouseClicked
+
+    }//GEN-LAST:event_posicao1MouseClicked
 
     private void posicao0MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_posicao0MouseClicked
         if (tabuleiro.obterAnimalDaJogada() instanceof Carcara) {
@@ -263,33 +414,16 @@ public class TelaJogo extends javax.swing.JFrame {
         reposicionarAnimais();
     }//GEN-LAST:event_posicao0MouseClicked
 
-    private void posicao1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_posicao1MouseClicked
+    private void btnMenuEntered(JMenu btn) {
+        btn.setForeground(new Color(247, 178, 104));
 
-    }//GEN-LAST:event_posicao1MouseClicked
+//        util.setarFont(btn, 16f, font8Bit);
+    }
 
-    private void posicao2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_posicao2MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_posicao2MouseClicked
-
-    private void posicao3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_posicao3MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_posicao3MouseClicked
-
-    private void posicao4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_posicao4MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_posicao4MouseClicked
-
-    private void posicao5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_posicao5MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_posicao5MouseClicked
-
-    private void btnJogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnJogoMouseClicked
-        configurarBotoesMenuJogo();
-    }//GEN-LAST:event_btnJogoMouseClicked
-
-    private void btnAutoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAutoriaMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnAutoriaMouseClicked
+    private void btnMenuExited(JMenu btn) {
+        btn.setForeground(Color.white);
+//        util.setarFont(btn, 14f, font8Bit);
+    }
 
     /**
      * @param args the command line arguments
@@ -302,8 +436,8 @@ public class TelaJogo extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu btnAutoria;
     private javax.swing.JMenu btnJogo;
+    private javax.swing.JDialog jDialog1;
     private javax.swing.JMenuBar menuBar;
-    private javax.swing.JPanel panelPrincipal;
     private javax.swing.JPanel panelTabuleiro;
     private javax.swing.JLabel posicao0;
     private javax.swing.JLabel posicao1;
@@ -324,8 +458,10 @@ public class TelaJogo extends javax.swing.JFrame {
         int posicaoCarcara = tabuleiro.getPosicoes().indexOf(tabuleiro.obterPosicaoCarcara());
         int posicaoCabrito = tabuleiro.getPosicoes().indexOf(tabuleiro.obterPosicaoCabrito());
 
-        setarTexto(posicaoCarcara, "Carcara");
-        setarTexto(posicaoCabrito, "Cabrito");
+//        setarTexto(posicaoCarcara, "Carcara");
+//        setarTexto(posicaoCabrito, "Cabrito");
+        setarImagemCabra(posicaoCabrito);
+        setarImagemCarcara(posicaoCarcara);
     }
 
     private void setarTexto(int posicao, String nomeAnimal) {
@@ -333,14 +469,15 @@ public class TelaJogo extends javax.swing.JFrame {
     }
 
     private void configurarBotoesMenuJogo() {
-        JButton btnVoltar = new BtnDefault(24f, new Color(61, 74, 155), "Voltar", new Dimension(300, 70));
-        JButton btnReiniciar = new BtnDefault(24f, new Color(61, 74, 155), "Reiniciar", new Dimension(300, 70));
-        JButton btnSair = new BtnDefault(24f, new Color(61, 74, 155), "Sair", new Dimension(300, 70));
+        JButton btnVoltar = new BtnDefault(24f, util.COR_FUNDO_BTN, "Voltar", new Dimension(300, 70));
+        JButton btnReiniciar = new BtnDefault(24f, util.COR_FUNDO_BTN, "Reiniciar", new Dimension(300, 70));
+        JButton btnSair = new BtnDefault(24f, util.COR_FUNDO_BTN, "Sair", new Dimension(300, 70));
 
         PainelCentralizado panel = new PainelCentralizado(List.of(
                 btnVoltar, btnReiniciar, btnSair
         ));
 
+        panel.setBackground(util.COR_FUNDO);
         this.setContentPane(panel);
         this.revalidate();
         this.repaint();

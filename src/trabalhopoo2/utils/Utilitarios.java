@@ -16,7 +16,15 @@ import javax.swing.JButton;
  */
 public final class Utilitarios {
 
-    public static final Color COR_FUNDO_BTN = new Color(61, 74, 155);
+    public final Color COR_1 = new Color(247, 178, 104);
+
+    public final Color COR_FUNDO_BTN = new Color(34, 102, 45);
+    
+    public final Color COR_FUNDO_MENU_BAR = new Color(34, 102, 45);
+
+    public final Color COR_HOVER_BTN = new Color(247, 178, 104); // (38, 210, 62) é outra opção
+
+    public final Color COR_FUNDO = new Color(20, 150, 20);
 
     public Font configurarFonte8Bit() {
         try {

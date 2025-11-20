@@ -4,6 +4,7 @@
  */
 package trabalhopoo2.components;
 
+import java.awt.BasicStroke;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -13,7 +14,7 @@ import javax.swing.border.Border;
 
 /**
  *
- * @author lucik
+ * @author Iuri
  */
 public class BordaCircular implements Border {
 
@@ -22,14 +23,15 @@ public class BordaCircular implements Border {
         Graphics2D g2 = (Graphics2D) g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         int diametro = Math.min(width, height) - 1;
-        g2.drawOval(x, y, diametro, diametro);
 
+        g2.setStroke(new BasicStroke(2));
+
+        g2.drawOval(x, y, diametro, diametro);
     }
 
     @Override
     public Insets getBorderInsets(Component c) {
         return new Insets(5, 5, 5, 5);
-
     }
 
     @Override

@@ -41,8 +41,8 @@ public class BtnDefault extends JButton {
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                setBorder(javax.swing.BorderFactory.createLineBorder(Color.BLACK, 2));
-                setForeground(Color.BLACK);
+                setBorder(javax.swing.BorderFactory.createLineBorder(util.COR_HOVER_BTN, 2));
+                setForeground(util.COR_HOVER_BTN);
                 revalidate();
                 repaint();
             }
