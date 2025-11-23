@@ -31,6 +31,8 @@ import trabalhopoo2.components.BordaCircular;
 import trabalhopoo2.components.BtnDefault;
 import trabalhopoo2.components.JPanelComImagem;
 import trabalhopoo2.components.PainelCentralizado;
+import trabalhopoo2.model.Animal;
+import trabalhopoo2.model.Cabrito;
 import trabalhopoo2.model.Carcara;
 import trabalhopoo2.utils.Utilitarios;
 
@@ -65,16 +67,23 @@ public class TelaJogo extends javax.swing.JFrame {
                         posicao4,
                         posicao5)
         );
+
+        panelComImagem = new JPanelComImagem(new ImageIcon(getClass().getResource("/resources/imgs/montanha_com_linhas.png")));
+        configurarJPanelComImagem();
+        panelComImagem.setLayout(null);
+
         configurarMenuBar();
         reposicionarAnimais();
         tornarLabelsCirculares();
         configurarFontes();
+        configurarBtnSuperPulo();
+        configurarLabelAnimalJogada();
 
         panelTabuleiro.setBorder(new EmptyBorder(5, 5, 5, 5));
         panelTabuleiro.setOpaque(false);
-
-        panelComImagem = new JPanelComImagem(new ImageIcon(getClass().getResource("/resources/imgs/montanha_com_linhas.png")));
-        configurarJPanelComImagem();
+                
+        setarCorNasBordasConformePosicoesValidasEInvalidas(tabuleiro.getPosicoes().getFirst(), tabuleiro.obterAnimalDaJogada());
+        
     }
 
     /**
@@ -334,15 +343,44 @@ public class TelaJogo extends javax.swing.JFrame {
     }//GEN-LAST:event_posicao1MouseClicked
 
     private void posicao0MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_posicao0MouseClicked
-        if (tabuleiro.obterAnimalDaJogada() instanceof Carcara) {
+        Animal animalJogada = tabuleiro.obterAnimalDaJogada();
+        if (animalJogada instanceof Carcara) {
             Posicao posCarcara = tabuleiro.obterPosicaoCarcara();
-
+            setarCorNasBordasConformePosicoesValidasEInvalidas(posCarcara, animalJogada);
         } else {
-
+            Posicao posCabrito = tabuleiro.obterPosicaoCabrito();
+            setarCorNasBordasConformePosicoesValidasEInvalidas(posCabrito, animalJogada);
         }
         reposicionarAnimais();
-
+        tabuleiro.incrementarJogada();
     }//GEN-LAST:event_posicao0MouseClicked
+
+    private void setarCorNasBordasConformePosicoesValidasEInvalidas(Posicao posicao, Animal animalJogada) {
+        List<Integer> posicoesValidasNaJogada = posicao.getPosicoesValidas();
+        removerCorDaBordaDosLabelsPosicao();
+
+        for (int i = 0; i < 7; i++) {
+            if (posicoesValidasNaJogada.contains(i)) {
+                setarCorDaBordaLabelPosicao(labelsPosicoes.get(i), util.COR_BORDA_POSICAO_VALIDA);
+                if (animalJogada instanceof Cabrito) {
+                    Posicao posCarcara = tabuleiro.obterPosicaoCarcara();
+                    Integer indexDoCarcara = tabuleiro.getPosicoes().indexOf(posCarcara);
+                    if (indexDoCarcara == i) {
+                        setarCorDaBordaLabelPosicao(labelsPosicoes.get(i), util.COR_BORDA_POSICAO_PERIGOSA);
+                    }
+                } else {
+                    Posicao posCabrito = tabuleiro.obterPosicaoCabrito();
+                    Integer indexDoCabrito = tabuleiro.getPosicoes().indexOf(posCabrito);
+                    if (indexDoCabrito == i) {
+                        setarCorDaBordaLabelPosicao(labelsPosicoes.get(i), util.COR_BORDA_POSICAO_PERIGOSA);
+                    }
+                }
+
+            } else if (i == tabuleiro.getPosicoes().indexOf(posicao)) {
+                setarCorDaBordaLabelPosicao(labelsPosicoes.get(i), util.COR_BORDA_POSICAO_ATUAL);
+            }
+        }
+    }
 
     private void panelTabuleiroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelTabuleiroMouseClicked
         System.out.println(evt.getPoint());
@@ -427,7 +465,23 @@ public class TelaJogo extends javax.swing.JFrame {
 
     private void configurarLabel(JLabel label) {
         label.setPreferredSize(new Dimension(50, 50));
+        label.setForeground(Color.black);
         label.setBorder(new BordaCircular());
+//        label.setIcon(null);
+    }
+
+    private void configurarLabelAnimalJogada() {
+        JLabel labelAnimalJogada = new JLabel("Vez do Carcara");
+        util.setarFont(labelAnimalJogada, 24f, font8Bit);
+        labelAnimalJogada.setBounds(225, 0, 450, 60);
+        labelAnimalJogada.setForeground(util.COR_TEXTO);
+        panelComImagem.add(labelAnimalJogada);
+    }
+
+    private void configurarBtnSuperPulo() {
+        BtnDefault btnSuperPulo = new BtnDefault(12f, util.COR_FUNDO_BTN, "SUPER PULO", new Dimension(40, 40));
+        btnSuperPulo.setBounds(325, 460, 150, 60);
+        panelComImagem.add(btnSuperPulo);
     }
 
     public void reposicionarAnimais() {
@@ -451,12 +505,23 @@ public class TelaJogo extends javax.swing.JFrame {
         labelsPosicoes.get(posicao).setText(nomeAnimal);
     }
 
+    private void setarCorDaBordaLabelPosicao(JLabel label, Color cor) {
+        label.setForeground(cor);
+    }
+
+    private void removerCorDaBordaDosLabelsPosicao() {
+        labelsPosicoes.forEach(lbl -> {
+            lbl.setForeground(Color.black);
+        });
+    }
+
     private void setarImagemCabra(int posicao) {
         JLabel label = labelsPosicoes.get(posicao);
         label.setText("");
+        label.setIcon(null);
         Image icon = new ImageIcon(getClass().getResource("/resources/imgs/cabra.png")).
                 getImage().
-                getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+                getScaledInstance(40, 40, Image.SCALE_SMOOTH);
 
         label.setIcon(new ImageIcon(icon));
     }
@@ -464,9 +529,10 @@ public class TelaJogo extends javax.swing.JFrame {
     private void setarImagemCarcara(int posicao) {
         JLabel label = labelsPosicoes.get(posicao);
         label.setText("");
+        label.setIcon(null);
         Image icon = new ImageIcon(getClass().getResource("/resources/imgs/carcara.png")).
                 getImage().
-                getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+                getScaledInstance(40, 40, Image.SCALE_SMOOTH);
 
         label.setIcon(new ImageIcon(icon));
     }

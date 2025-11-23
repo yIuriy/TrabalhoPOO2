@@ -16,15 +16,23 @@ import javax.swing.JButton;
  */
 public final class Utilitarios {
 
-    public final Color COR_1 = new Color(247, 178, 104);
+    public final Color COR_TEXTO = new Color(255, 255, 255);
+
+    public final Color COR_TEXTO_HOVER = new Color(247, 178, 104);
 
     public final Color COR_FUNDO_BTN = new Color(34, 102, 45);
-    
+
     public final Color COR_FUNDO_MENU_BAR = new Color(34, 102, 45);
 
     public final Color COR_HOVER_BTN = new Color(247, 178, 104); // (38, 210, 62) é outra opção
 
     public final Color COR_FUNDO = new Color(20, 150, 20);
+
+    public final Color COR_BORDA_POSICAO_VALIDA = new Color(0, 200, 0);
+
+    public final Color COR_BORDA_POSICAO_ATUAL = new Color(240, 240, 0);
+
+    public final Color COR_BORDA_POSICAO_PERIGOSA = new Color(200, 0, 0);
 
     public Font configurarFonte8Bit() {
         try {

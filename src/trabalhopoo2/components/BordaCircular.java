@@ -10,6 +10,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Insets;
 import java.awt.RenderingHints;
+import java.awt.Stroke;
 import javax.swing.border.Border;
 
 /**
@@ -24,7 +25,7 @@ public class BordaCircular implements Border {
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         int diametro = Math.min(width, height) - 1;
 
-        g2.setStroke(new BasicStroke(2));
+        g2.setStroke(new BasicStroke(3f));
 
         g2.drawOval(x, y, diametro, diametro);
     }

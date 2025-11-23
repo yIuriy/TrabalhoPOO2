@@ -30,7 +30,7 @@ public class Tabuleiro {
     public Animal obterAnimalDaJogada() {
         if (jogadas % 2 == 0) {
             System.out.println("CABRITO");
-            return cabrito;
+            return cabrito  ;
         } else {
             System.out.println("CARCARA");
             return carcara;
@@ -46,12 +46,12 @@ public class Tabuleiro {
     }
 
     private void configurarPosicoes() {
-        posicoes.add(new Posicao(List.of(1, 2, 3)));
-        posicoes.add(new Posicao(List.of(0, 4)));
-        posicoes.add(new Posicao(List.of(0, 4, 5)));
-        posicoes.add(new Posicao(List.of(0, 5)));
-        posicoes.add(new Posicao(List.of(1, 2, 5)));
-        posicoes.add(new Posicao(List.of(2, 3, 4)));
+        posicoes.add(new Posicao(List.of(1, 2, 3))); // 0
+        posicoes.add(new Posicao(List.of(0, 4))); // 1
+        posicoes.add(new Posicao(List.of(0, 4, 5))); // 2
+        posicoes.add(new Posicao(List.of(0, 5))); // 3
+        posicoes.add(new Posicao(List.of(1, 2, 5))); // 4
+        posicoes.add(new Posicao(List.of(2, 3, 4))); // 5
 
         posicoes.get(0).setAnimal(cabrito);
         posicoes.get(1).setAnimal(carcara);
