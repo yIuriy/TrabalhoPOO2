@@ -323,26 +323,60 @@ public class TelaJogo extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAutoriaMouseExited
 
     private void posicao5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_posicao5MouseClicked
-        // TODO add your handling code here:
+        if(tabuleiro.tentarMoverAnimal(5)){
+            dispose();
+        }else{
+            tabuleiro.incrementarJogada();
+        }
+        reposicionarAnimais();
     }//GEN-LAST:event_posicao5MouseClicked
 
     private void posicao3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_posicao3MouseClicked
-        // TODO add your handling code here:
+        if(tabuleiro.tentarMoverAnimal(3)){
+            dispose();
+        }else{
+            tabuleiro.incrementarJogada();
+        }
+        reposicionarAnimais();
     }//GEN-LAST:event_posicao3MouseClicked
 
     private void posicao4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_posicao4MouseClicked
-        // TODO add your handling code here:
+        if(tabuleiro.tentarMoverAnimal(4)){
+            dispose();
+        }else{
+            tabuleiro.incrementarJogada();
+        }
+        reposicionarAnimais();
     }//GEN-LAST:event_posicao4MouseClicked
 
     private void posicao2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_posicao2MouseClicked
-        // TODO add your handling code here:
+        if(tabuleiro.tentarMoverAnimal(2)){
+            dispose();
+        }else{
+            tabuleiro.incrementarJogada();
+        }
+        reposicionarAnimais();
+        
     }//GEN-LAST:event_posicao2MouseClicked
 
     private void posicao1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_posicao1MouseClicked
-
+        if(tabuleiro.tentarMoverAnimal(1)){
+            dispose();
+        }else{
+            tabuleiro.incrementarJogada();
+        }
+        reposicionarAnimais();
+        
     }//GEN-LAST:event_posicao1MouseClicked
 
     private void posicao0MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_posicao0MouseClicked
+        if(tabuleiro.tentarMoverAnimal(0)){
+            dispose();
+        }else{
+            tabuleiro.incrementarJogada();
+        }
+        reposicionarAnimais();
+        /*
         Animal animalJogada = tabuleiro.obterAnimalDaJogada();
         if (animalJogada instanceof Carcara) {
             Posicao posCarcara = tabuleiro.obterPosicaoCarcara();
@@ -353,6 +387,7 @@ public class TelaJogo extends javax.swing.JFrame {
         }
         reposicionarAnimais();
         tabuleiro.incrementarJogada();
+        */
     }//GEN-LAST:event_posicao0MouseClicked
 
     private void setarCorNasBordasConformePosicoesValidasEInvalidas(Posicao posicao, Animal animalJogada) {

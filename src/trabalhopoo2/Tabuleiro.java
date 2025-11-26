@@ -30,7 +30,7 @@ public class Tabuleiro {
     public Animal obterAnimalDaJogada() {
         if (jogadas % 2 == 0) {
             System.out.println("CABRITO");
-            return cabrito  ;
+            return cabrito;
         } else {
             System.out.println("CARCARA");
             return carcara;
@@ -39,10 +39,6 @@ public class Tabuleiro {
 
     public void incrementarJogada() {
         jogadas++;
-    }
-
-    public boolean podeMover(Animal animal, int posicaoDesejada) {
-        return false;
     }
 
     private void configurarPosicoes() {
@@ -79,7 +75,40 @@ public class Tabuleiro {
         return posicoes;
     }
 
-    public boolean tentarMoverAnimal() {
+    private void reposicionarAnimal(int posicaoDeDestino) {
+
+    }
+
+    public boolean tentarMoverAnimal(int posicaoDesejada) {
+        int indexPosicaoDoAnimal = -1;
+        for (int i = 0; i <= 5; i++) {
+            if (posicoes.get(i).getAnimal() == obterAnimalDaJogada()) {
+                indexPosicaoDoAnimal = i;
+                break;
+            }
+        }
+
+        if (posicoes.get(indexPosicaoDoAnimal).verificarSeJogadaEValida(posicaoDesejada)) {
+            if (obterAnimalDaJogada() == carcara) {
+
+                if (posicoes.get(posicaoDesejada).getAnimal() == cabrito) {
+                return true;
+                }
+                posicoes.get(indexPosicaoDoAnimal).setAnimal(null);
+                posicoes.get(posicaoDesejada).setAnimal(carcara);
+
+            } else {
+                if (!(posicoes.get(posicaoDesejada).getAnimal() == carcara)) {
+
+                    posicoes.get(indexPosicaoDoAnimal).setAnimal(null);
+                    posicoes.get(posicaoDesejada).setAnimal(cabrito);
+
+                }
+
+            }
+
+        }
+
         return false;
     }
 
