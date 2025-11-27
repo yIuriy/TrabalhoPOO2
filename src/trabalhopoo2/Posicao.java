@@ -5,6 +5,7 @@
 package trabalhopoo2;
 
 import java.util.List;
+import trabalhopoo2.exceptions.JogadaInvalidaException;
 import trabalhopoo2.model.Animal;
 
 /**

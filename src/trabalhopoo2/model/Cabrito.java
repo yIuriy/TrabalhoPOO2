@@ -18,6 +18,11 @@ public class Cabrito extends Animal {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
+    @Override
+    public String getNomeDeExibicao() {
+        return "Cabrito";
+    }
+
     public boolean isJaUsouSuperPulo() {
         return jaUsouSuperPulo;
     }
@@ -25,7 +30,5 @@ public class Cabrito extends Animal {
     public void setJaUsouSuperPulo(boolean jaUsouSuperPulo) {
         this.jaUsouSuperPulo = jaUsouSuperPulo;
     }
-    
-    
 
 }

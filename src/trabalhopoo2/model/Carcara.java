@@ -7,13 +7,18 @@ package trabalhopoo2.model;
 /**
  *
  * @author Iuri
- * @author Dyonathan 
+ * @author Dyonathan
  *
  */
-public class Carcara extends Animal{
+public class Carcara extends Animal {
 
     @Override
     boolean moverse(int local) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public String getNomeDeExibicao() {
+        return "Carcara";
     }
 }

@@ -11,4 +11,6 @@ package trabalhopoo2.model;
  */
 public abstract class Animal {
     abstract boolean moverse(int local); 
+    
+    public abstract String getNomeDeExibicao();
 }

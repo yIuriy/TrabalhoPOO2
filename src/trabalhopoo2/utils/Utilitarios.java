@@ -34,6 +34,13 @@ public final class Utilitarios {
 
     public final Color COR_BORDA_POSICAO_PERIGOSA = new Color(200, 0, 0);
 
+    public final Color COR_FUNDO_MSG_ERRO = new Color(120, 20, 20);
+
+    public final Color COR_TEXTO_MSG_ERRO = new Color(255, 245, 235);
+    
+    public final Color COR_BORDA_MSG_ERRO = new Color(255, 245, 235);
+
+
     public Font configurarFonte8Bit() {
         try {
             Font font = Font.createFont(

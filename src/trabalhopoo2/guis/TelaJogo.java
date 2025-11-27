@@ -19,10 +19,14 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 import trabalhopoo2.Posicao;
@@ -31,6 +35,7 @@ import trabalhopoo2.components.BordaCircular;
 import trabalhopoo2.components.BtnDefault;
 import trabalhopoo2.components.JPanelComImagem;
 import trabalhopoo2.components.PainelCentralizado;
+import trabalhopoo2.exceptions.JogadaInvalidaException;
 import trabalhopoo2.model.Animal;
 import trabalhopoo2.model.Cabrito;
 import trabalhopoo2.model.Carcara;
@@ -49,6 +54,10 @@ public class TelaJogo extends javax.swing.JFrame {
     private final Utilitarios util;
     private final Container containerInicial;
     private final JPanelComImagem panelComImagem;
+    private final JLabel labelAnimalJogada;
+    private JPanel panelContainerMensagem;
+    private Timer timerMensagemDeAlerta;
+    private final JLabel labelRodadas;
 
     /**
      * Creates new form TelaJogo
@@ -77,13 +86,19 @@ public class TelaJogo extends javax.swing.JFrame {
         tornarLabelsCirculares();
         configurarFontes();
         configurarBtnSuperPulo();
+
+        labelAnimalJogada = new JLabel();
         configurarLabelAnimalJogada();
+        setarTextoConformeAnimalDaJogada();
+
+        labelRodadas = new JLabel("", SwingConstants.CENTER);
+        configurarLabelRodadas();
+        setarTextoConformeJogada();
 
         panelTabuleiro.setBorder(new EmptyBorder(5, 5, 5, 5));
         panelTabuleiro.setOpaque(false);
-                
-        setarCorNasBordasConformePosicoesValidasEInvalidas(tabuleiro.getPosicoes().getFirst(), tabuleiro.obterAnimalDaJogada());
-        
+
+        setarCorNasBordasConformePosicoesValidasEInvalidas(tabuleiro.obterAnimalDaJogada());
     }
 
     /**
@@ -323,75 +338,107 @@ public class TelaJogo extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAutoriaMouseExited
 
     private void posicao5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_posicao5MouseClicked
-        if(tabuleiro.tentarMoverAnimal(5)){
-            dispose();
-        }else{
-            tabuleiro.incrementarJogada();
-        }
-        reposicionarAnimais();
+        controlarJogo(5);
     }//GEN-LAST:event_posicao5MouseClicked
 
     private void posicao3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_posicao3MouseClicked
-        if(tabuleiro.tentarMoverAnimal(3)){
-            dispose();
-        }else{
-            tabuleiro.incrementarJogada();
-        }
-        reposicionarAnimais();
+        controlarJogo(3);
     }//GEN-LAST:event_posicao3MouseClicked
 
     private void posicao4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_posicao4MouseClicked
-        if(tabuleiro.tentarMoverAnimal(4)){
-            dispose();
-        }else{
-            tabuleiro.incrementarJogada();
-        }
-        reposicionarAnimais();
+        controlarJogo(4);
     }//GEN-LAST:event_posicao4MouseClicked
 
     private void posicao2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_posicao2MouseClicked
-        if(tabuleiro.tentarMoverAnimal(2)){
-            dispose();
-        }else{
-            tabuleiro.incrementarJogada();
-        }
-        reposicionarAnimais();
-        
+        controlarJogo(2);
     }//GEN-LAST:event_posicao2MouseClicked
 
     private void posicao1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_posicao1MouseClicked
-        if(tabuleiro.tentarMoverAnimal(1)){
-            dispose();
-        }else{
-            tabuleiro.incrementarJogada();
-        }
-        reposicionarAnimais();
-        
+        controlarJogo(1);
     }//GEN-LAST:event_posicao1MouseClicked
 
     private void posicao0MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_posicao0MouseClicked
-        if(tabuleiro.tentarMoverAnimal(0)){
-            dispose();
-        }else{
-            tabuleiro.incrementarJogada();
-        }
-        reposicionarAnimais();
-        /*
-        Animal animalJogada = tabuleiro.obterAnimalDaJogada();
-        if (animalJogada instanceof Carcara) {
-            Posicao posCarcara = tabuleiro.obterPosicaoCarcara();
-            setarCorNasBordasConformePosicoesValidasEInvalidas(posCarcara, animalJogada);
-        } else {
-            Posicao posCabrito = tabuleiro.obterPosicaoCabrito();
-            setarCorNasBordasConformePosicoesValidasEInvalidas(posCabrito, animalJogada);
-        }
-        reposicionarAnimais();
-        tabuleiro.incrementarJogada();
-        */
+        controlarJogo(0);
     }//GEN-LAST:event_posicao0MouseClicked
 
-    private void setarCorNasBordasConformePosicoesValidasEInvalidas(Posicao posicao, Animal animalJogada) {
+    private void controlarJogo(int posicaoDesejada) {
+        try {
+            if (tabuleiro.tentarMoverAnimal(posicaoDesejada)) {
+                configurarTelaFinalDoJogo();
+            } else {
+                tabuleiro.incrementarJogada();
+            }
+            reposicionarAnimais();
+            setarTextoConformeAnimalDaJogada();
+            setarCorNasBordasConformePosicoesValidasEInvalidas(tabuleiro.obterAnimalDaJogada());
+            setarTextoConformeJogada();
+        } catch (JogadaInvalidaException e) {
+            mensagemDeJogadaInvalida(e.getMessage());
+        }
+    }
+
+    private void mensagemDeJogadaInvalida(String mensagem) {
+        JPanel glass = (JPanel) getGlassPane();
+        glass.setLayout(new BorderLayout());
+
+        if (panelContainerMensagem != null) {
+            glass.remove(panelContainerMensagem);
+        }
+
+        panelContainerMensagem = new JPanel(new BorderLayout());
+        panelContainerMensagem.setBackground(util.COR_FUNDO_MSG_ERRO);
+        panelContainerMensagem.setOpaque(true);
+        panelContainerMensagem.setPreferredSize(new Dimension(getWidth(), 60));
+        panelContainerMensagem.setBorder(BorderFactory.createLineBorder(util.COR_BORDA_MSG_ERRO, 2));
+
+        JLabel labelJogadaInvalida = new JLabel("", SwingConstants.CENTER);
+        labelJogadaInvalida.setText(mensagem);
+        labelJogadaInvalida.setForeground(util.COR_TEXTO_MSG_ERRO);
+        util.setarFont(labelJogadaInvalida, 20f, font8Bit);
+
+        panelContainerMensagem.add(labelJogadaInvalida);
+        glass.add(panelContainerMensagem, BorderLayout.NORTH);
+        glass.setVisible(true);
+
+        glass.repaint();
+        glass.revalidate();
+
+        if (timerMensagemDeAlerta != null && timerMensagemDeAlerta.isRunning()) {
+            timerMensagemDeAlerta.stop();
+        }
+
+        timerMensagemDeAlerta = new javax.swing.Timer(3000, e -> {
+            panelContainerMensagem.remove(labelJogadaInvalida);
+            getContentPane().remove(panelContainerMensagem);
+            glass.setVisible(false);
+            revalidate();
+            repaint();
+        });
+        timerMensagemDeAlerta.setRepeats(false);
+        timerMensagemDeAlerta.start();
+    }
+
+    private void setarTextoConformeJogada() {
+        Integer jogadaAtual = tabuleiro.getJogadas();
+        labelRodadas.setText(jogadaAtual.toString());
+    }
+
+    private void setarTextoConformeAnimalDaJogada() {
+        String textoBase = "Vez do ";
+        Animal animalDaJogada = tabuleiro.obterAnimalDaJogada();
+        String nomeDeExibicao = animalDaJogada.getNomeDeExibicao();
+        labelAnimalJogada.setText(textoBase + nomeDeExibicao);
+    }
+
+    private void setarCorNasBordasConformePosicoesValidasEInvalidas(Animal animalJogada) {
+        Posicao posicao;
+        if (animalJogada instanceof Cabrito) {
+            posicao = tabuleiro.obterPosicaoCabrito();
+        } else {
+            posicao = tabuleiro.obterPosicaoCarcara();
+        }
         List<Integer> posicoesValidasNaJogada = posicao.getPosicoesValidas();
+
         removerCorDaBordaDosLabelsPosicao();
 
         for (int i = 0; i < 7; i++) {
@@ -454,6 +501,47 @@ public class TelaJogo extends javax.swing.JFrame {
     private javax.swing.JLabel posicao5;
     // End of variables declaration//GEN-END:variables
 
+    private void configurarBotoesMenuJogo() {
+        JButton btnVoltar = new BtnDefault(24f, util.COR_FUNDO_BTN, "Voltar", new Dimension(300, 70));
+        JButton btnReiniciar = new BtnDefault(24f, util.COR_FUNDO_BTN, "Reiniciar", new Dimension(300, 70));
+        JButton btnSair = new BtnDefault(24f, util.COR_FUNDO_BTN, "Sair", new Dimension(300, 70));
+
+        PainelCentralizado panel = new PainelCentralizado(List.of(
+                btnVoltar, btnReiniciar, btnSair
+        ));
+
+        panel.setBackground(util.COR_FUNDO);
+        this.setContentPane(panel);
+        this.revalidate();
+        this.repaint();
+
+        btnVoltar.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                setContentPane(containerInicial);
+                revalidate();
+                repaint();
+            }
+        }
+        );
+
+        btnReiniciar.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // TODO
+            }
+        }
+        );
+
+        btnSair.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                dispose();
+            }
+        }
+        );
+    }
+
     private void configurarFontes() {
         util.setarFont(btnJogo, 14f, font8Bit);
         util.setarFont(btnAutoria, 14f, font8Bit);
@@ -463,6 +551,13 @@ public class TelaJogo extends javax.swing.JFrame {
         util.setarFont(posicao3, 6f, font8Bit);
         util.setarFont(posicao4, 6f, font8Bit);
         util.setarFont(posicao5, 6f, font8Bit);
+    }
+
+    private void configurarLabelRodadas() {
+        util.setarFont(labelRodadas, 24f, font8Bit);
+        labelRodadas.setForeground(util.COR_TEXTO);
+        labelRodadas.setBounds(getWidth() - 120, 0, 120, 60);
+        panelComImagem.add(labelRodadas);
     }
 
     private void configurarJPanelComImagem() {
@@ -506,7 +601,6 @@ public class TelaJogo extends javax.swing.JFrame {
     }
 
     private void configurarLabelAnimalJogada() {
-        JLabel labelAnimalJogada = new JLabel("Vez do Carcara");
         util.setarFont(labelAnimalJogada, 24f, font8Bit);
         labelAnimalJogada.setBounds(225, 0, 450, 60);
         labelAnimalJogada.setForeground(util.COR_TEXTO);
@@ -530,10 +624,18 @@ public class TelaJogo extends javax.swing.JFrame {
         int posicaoCarcara = tabuleiro.getPosicoes().indexOf(tabuleiro.obterPosicaoCarcara());
         int posicaoCabrito = tabuleiro.getPosicoes().indexOf(tabuleiro.obterPosicaoCabrito());
 
+//        tabuleiro.getPosicoes().forEach(p -> {
+//            System.out.println(p.getAnimal());
+//        });
+//        
+//        System.out.println(posicaoCabrito);
+//        System.out.println(posicaoCarcara);
 //        setarTexto(posicaoCarcara, "Carcara");
 //        setarTexto(posicaoCabrito, "Cabrito");
-        setarImagemCabra(posicaoCabrito);
+        setarImagemCabrito(posicaoCabrito);
         setarImagemCarcara(posicaoCarcara);
+        revalidate();
+        repaint();
     }
 
     private void setarTexto(int posicao, String nomeAnimal) {
@@ -550,10 +652,14 @@ public class TelaJogo extends javax.swing.JFrame {
         });
     }
 
-    private void setarImagemCabra(int posicao) {
+    private void limparImagemDosLabels() {
+        labelsPosicoes.forEach(l -> l.setIcon(null));
+    }
+
+    private void setarImagemCabrito(int posicao) {
         JLabel label = labelsPosicoes.get(posicao);
         label.setText("");
-        label.setIcon(null);
+        limparImagemDosLabels();
         Image icon = new ImageIcon(getClass().getResource("/resources/imgs/cabra.png")).
                 getImage().
                 getScaledInstance(40, 40, Image.SCALE_SMOOTH);
@@ -620,29 +726,26 @@ public class TelaJogo extends javax.swing.JFrame {
         );
     }
 
-    private void configurarBotoesMenuJogo() {
-        JButton btnVoltar = new BtnDefault(24f, util.COR_FUNDO_BTN, "Voltar", new Dimension(300, 70));
+    private void configurarTelaFinalDoJogo() {
         JButton btnReiniciar = new BtnDefault(24f, util.COR_FUNDO_BTN, "Reiniciar", new Dimension(300, 70));
         JButton btnSair = new BtnDefault(24f, util.COR_FUNDO_BTN, "Sair", new Dimension(300, 70));
 
+        JLabel labelNomeVencedor = new JLabel("Carcara venceu!");
+        JLabel labelTotalDeJogadas = new JLabel("Total de rodadas: " + tabuleiro.getJogadas());
+
         PainelCentralizado panel = new PainelCentralizado(List.of(
-                btnVoltar, btnReiniciar, btnSair
-        ));
+                labelNomeVencedor, labelTotalDeJogadas, btnReiniciar, btnSair));
+
+        util.setarFont(labelNomeVencedor, 24f, font8Bit);
+        util.setarFont(labelTotalDeJogadas, 24f, font8Bit);
+
+        labelNomeVencedor.setForeground(Color.white);
+        labelTotalDeJogadas.setForeground(Color.white);
 
         panel.setBackground(util.COR_FUNDO);
         this.setContentPane(panel);
         this.revalidate();
         this.repaint();
-
-        btnVoltar.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                setContentPane(containerInicial);
-                revalidate();
-                repaint();
-            }
-        }
-        );
 
         btnReiniciar.addMouseListener(new MouseAdapter() {
             @Override
@@ -659,7 +762,6 @@ public class TelaJogo extends javax.swing.JFrame {
             }
         }
         );
-
     }
 
     private void abrirUrl(String url) {
