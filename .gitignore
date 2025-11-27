@@ -1,2 +1,55 @@
-/build/
+# =========================
+# Java
+# =========================
+*.class
+*.log
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# =========================
+# NetBeans
+# =========================
+/nbproject/private/
+/nbbuild/
 /dist/
+/build/
+/nbdist/
+/.nb-gradle/
+
+# Arquivos gerados automaticamente
+nbactions.xml
+nb-configuration.xml
+
+# Cache e temporários
+.nbattrs
+
+# =========================
+# Sistema Operacional
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# IDEs adicionais
+# =========================
+.idea/
+*.iml
+.vscode/
+
+# =========================
+# Arquivos temporários
+# =========================
+*.tmp
+*.bak
+*.swp
+*~
+
+# =========================
+# Logs
+# =========================
+logs/
+*.out
