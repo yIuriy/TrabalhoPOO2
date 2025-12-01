@@ -28,7 +28,7 @@ public final class Utilitarios {
 
     public final Color COR_FUNDO = new Color(20, 150, 20);
 
-    public final Color COR_BORDA_POSICAO_VALIDA = new Color(0, 200, 0);
+    public final Color COR_BORDA_POSICAO_VALIDA = new Color(0, 100, 0);
 
     public final Color COR_BORDA_POSICAO_ATUAL = new Color(240, 240, 0);
 

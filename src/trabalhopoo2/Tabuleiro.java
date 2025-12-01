@@ -98,7 +98,7 @@ public class Tabuleiro {
             posicoes.get(indexPosicaoDoAnimal).setAnimal(null);
             posicoes.get(posicaoDesejada).setAnimal(carcara);
 
-        } else if (obterAnimalDaJogada() == cabrito && !(posicoes.get(posicaoDesejada).getAnimal() == carcara)) {
+        } else if (obterAnimalDaJogada() == cabrito && (posicoes.get(posicaoDesejada).getAnimal() == null) ) {
             if (posicoes.get(indexPosicaoDoAnimal).verificarSeJogadaEValida(posicaoDesejada)) {
 
             } else if (!cabritoUsouSuperPulo) {
