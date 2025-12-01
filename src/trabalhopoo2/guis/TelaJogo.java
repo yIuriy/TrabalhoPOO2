@@ -528,7 +528,9 @@ public class TelaJogo extends javax.swing.JFrame {
         btnReiniciar.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                // TODO
+                TelaJogo TJ = new TelaJogo();
+                TJ.setVisible(true);
+                dispose();
             }
         }
         );
@@ -750,7 +752,9 @@ public class TelaJogo extends javax.swing.JFrame {
         btnReiniciar.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                // TODO
+                TelaJogo TJ = new TelaJogo();
+                TJ.setVisible(true);
+                dispose();
             }
         }
         );

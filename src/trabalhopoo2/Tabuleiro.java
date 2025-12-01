@@ -6,6 +6,7 @@ package trabalhopoo2;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import trabalhopoo2.exceptions.JogadaInvalidaException;
 import trabalhopoo2.model.Animal;
 import trabalhopoo2.model.Cabrito;
@@ -20,6 +21,7 @@ public class Tabuleiro {
     private List<Posicao> posicoes = new ArrayList<>();
     private final Carcara carcara = new Carcara();
     private final Cabrito cabrito = new Cabrito();
+    private boolean cabritoUsouSuperPulo = false;
 
     private int jogadas = 0;
 
@@ -29,10 +31,8 @@ public class Tabuleiro {
 
     public Animal obterAnimalDaJogada() {
         if (jogadas % 2 == 0) {
-            System.out.println("CABRITO");
             return cabrito;
         } else {
-            System.out.println("CARCARA");
             return carcara;
         }
     }
@@ -91,26 +91,41 @@ public class Tabuleiro {
                 break;
             }
         }
+        if (obterAnimalDaJogada() == carcara && posicoes.get(indexPosicaoDoAnimal).verificarSeJogadaEValida(posicaoDesejada)) {
+            if (posicoes.get(posicaoDesejada).getAnimal() == cabrito) {
+                return true;
+            }
+            posicoes.get(indexPosicaoDoAnimal).setAnimal(null);
+            posicoes.get(posicaoDesejada).setAnimal(carcara);
 
-        if (posicoes.get(indexPosicaoDoAnimal).verificarSeJogadaEValida(posicaoDesejada)) {
-            if (obterAnimalDaJogada() == carcara) {
-                if (posicoes.get(posicaoDesejada).getAnimal() == cabrito) {
-                    return true;
+        } else if (obterAnimalDaJogada() == cabrito && !(posicoes.get(posicaoDesejada).getAnimal() == carcara)) {
+            if (posicoes.get(indexPosicaoDoAnimal).verificarSeJogadaEValida(posicaoDesejada)) {
+
+            } else if (!cabritoUsouSuperPulo) {
+
+                int resposta = JOptionPane.showConfirmDialog(
+                        null,
+                        "Deseja usar o Super Pulo?",
+                        "Confirmação",
+                        JOptionPane.YES_NO_OPTION
+                );
+
+                if (resposta == JOptionPane.YES_OPTION) {
+                    cabritoUsouSuperPulo = true;
+                } else {
+                    throw new JogadaInvalidaException("Super Pulo cancelado");
                 }
-                posicoes.get(indexPosicaoDoAnimal).setAnimal(null);
-                posicoes.get(posicaoDesejada).setAnimal(carcara);
 
             } else {
-                if (!(posicoes.get(posicaoDesejada).getAnimal() == carcara)) {
-                    posicoes.get(indexPosicaoDoAnimal).setAnimal(null);
-                    posicoes.get(posicaoDesejada).setAnimal(cabrito);
-                } else {
-                    throw new JogadaInvalidaException("Cabrito movendo para a morte!");
-                }
+                throw new JogadaInvalidaException("Cabrito ja usou o super pulo");
             }
+
+            posicoes.get(indexPosicaoDoAnimal).setAnimal(null);
+            posicoes.get(posicaoDesejada).setAnimal(cabrito);
         } else {
-            throw new JogadaInvalidaException("Posição não alcançável!");
+            throw new JogadaInvalidaException("Posição não alcançável ou inválida!");
         }
+
         return false;
     }
 
