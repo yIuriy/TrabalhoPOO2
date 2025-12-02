@@ -60,6 +60,7 @@ public class TelaJogo extends javax.swing.JFrame {
     private JPanel panelContainerMensagem;
     private Timer timerMensagemDeAlerta;
     private final JLabel labelRodadas;
+    private boolean comandosAtivados;
 
     /**
      * Creates new form TelaJogo
@@ -87,7 +88,6 @@ public class TelaJogo extends javax.swing.JFrame {
         reposicionarAnimais();
         tornarLabelsCirculares();
         configurarFontes();
-        configurarBtnSuperPulo();
 
         labelAnimalJogada = new JLabel();
         configurarLabelAnimalJogada();
@@ -102,10 +102,11 @@ public class TelaJogo extends javax.swing.JFrame {
 
         setarCorNasBordasConformePosicoesValidasEInvalidas(tabuleiro.obterAnimalDaJogada());
 
-        configurarTeclas();
+        
         setFocusable(true);
         requestFocusInWindow();
-
+        comandosAtivados = true;
+        configurarTeclas();
     }
 
     /**
@@ -143,11 +144,6 @@ public class TelaJogo extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(61, 110, 92));
         setResizable(false);
-        addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                formKeyPressed(evt);
-            }
-        });
 
         panelTabuleiro.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         panelTabuleiro.setMaximumSize(new java.awt.Dimension(800, 600));
@@ -371,6 +367,159 @@ public class TelaJogo extends javax.swing.JFrame {
         controlarJogo(0);
     }//GEN-LAST:event_posicao0MouseClicked
 
+    private void panelTabuleiroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelTabuleiroMouseClicked
+        System.out.println(evt.getPoint());
+    }//GEN-LAST:event_panelTabuleiroMouseClicked
+
+    private void btnMenuEntered(JMenu btn) {
+        btn.setForeground(new Color(247, 178, 104));
+    }
+
+    private void btnMenuExited(JMenu btn) {
+        btn.setForeground(Color.white);
+    }
+
+    public static void main(String args[]) {
+        java.awt.EventQueue.invokeLater(() -> new TelaJogo().setVisible(true));
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu btnAutoria;
+    private javax.swing.JMenu btnJogo;
+    private javax.swing.JDialog jDialog1;
+    private javax.swing.JMenuBar menuBar;
+    private javax.swing.JPanel panelTabuleiro;
+    private javax.swing.JLabel posicao0;
+    private javax.swing.JLabel posicao1;
+    private javax.swing.JLabel posicao2;
+    private javax.swing.JLabel posicao3;
+    private javax.swing.JLabel posicao4;
+    private javax.swing.JLabel posicao5;
+    // End of variables declaration//GEN-END:variables
+
+    
+    // Logica do Jogo -->
+    private void configurarBotoesMenuJogo() {
+        JButton btnVoltar = new BtnDefault(24f, util.COR_FUNDO_BTN, "Voltar", new Dimension(300, 70));
+        JButton btnReiniciar = new BtnDefault(24f, util.COR_FUNDO_BTN, "Reiniciar", new Dimension(300, 70));
+        JButton btnSair = new BtnDefault(24f, util.COR_FUNDO_BTN, "Sair", new Dimension(300, 70));
+
+        PainelCentralizado panel = new PainelCentralizado(List.of(
+                btnVoltar, btnReiniciar, btnSair
+        ));
+
+        panel.setBackground(util.COR_FUNDO);
+        this.setContentPane(panel);
+        this.revalidate();
+        this.repaint();
+
+        btnVoltar.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                setContentPane(containerInicial);
+                revalidate();
+                repaint();
+            }
+        }
+        );
+
+        btnReiniciar.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                TelaJogo TJ = new TelaJogo();
+                TJ.setVisible(true);
+                dispose();
+            }
+        }
+        );
+
+        btnSair.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                dispose();
+            }
+        }
+        );
+    }
+
+    private void configurarMenuBar() {
+        FlowLayout fl = new FlowLayout(FlowLayout.RIGHT);
+        fl.setVgap(18);
+        fl.setHgap(20);
+        menuBar.setLayout(fl);
+        menuBar.setBackground(util.COR_FUNDO_MENU_BAR);
+
+        menuBar.setBorder(new MatteBorder(0, 0, 2, 0, new Color(63, 66, 85)));
+        menuBar.setPreferredSize(new Dimension(menuBar.getWidth(), 50));
+
+        btnJogo.setForeground(Color.WHITE);
+
+        btnJogo.setBorder(new EmptyBorder(0, 0, 0, 0));
+        btnAutoria.setForeground(Color.WHITE);
+        btnAutoria.setBorder(new EmptyBorder(0, 0, 0, 0));
+    }
+    
+    public void reposicionarAnimais() {
+        posicao0.setText("W");
+        posicao1.setText("A");
+        posicao2.setText("S");
+        posicao3.setText("D");
+        posicao4.setText("Z");
+        posicao5.setText("X");
+        util.setarFont(posicao5, 12f, font8Bit);
+        repaint();
+        revalidate();
+
+        int posicaoCarcara = tabuleiro.getPosicoes().indexOf(tabuleiro.obterPosicaoCarcara());
+        int posicaoCabrito = tabuleiro.getPosicoes().indexOf(tabuleiro.obterPosicaoCabrito());
+
+        setarImagemCabrito(posicaoCabrito);
+        setarImagemCarcara(posicaoCarcara);
+        revalidate();
+        repaint();
+    }
+    
+    private void configurarTelaFinalDoJogo() {
+        comandosAtivados = false;
+        JButton btnReiniciar = new BtnDefault(24f, util.COR_FUNDO_BTN, "Reiniciar", new Dimension(300, 70));
+        JButton btnSair = new BtnDefault(24f, util.COR_FUNDO_BTN, "Sair", new Dimension(300, 70));
+
+        JLabel labelNomeVencedor = new JLabel("Carcara venceu!");
+        JLabel labelTotalDeJogadas = new JLabel("Total de rodadas: " + tabuleiro.getJogadas());
+
+        PainelCentralizado panel = new PainelCentralizado(List.of(
+                labelNomeVencedor, labelTotalDeJogadas, btnReiniciar, btnSair));
+
+        util.setarFont(labelNomeVencedor, 24f, font8Bit);
+        util.setarFont(labelTotalDeJogadas, 24f, font8Bit);
+
+        labelNomeVencedor.setForeground(Color.white);
+        labelTotalDeJogadas.setForeground(Color.white);
+
+        panel.setBackground(util.COR_FUNDO);
+        this.setContentPane(panel);
+        this.revalidate();
+        this.repaint();
+
+        btnReiniciar.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                TelaJogo TJ = new TelaJogo();
+                TJ.setVisible(true);
+                dispose();
+            }
+        }
+        );
+
+        btnSair.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                dispose();
+            }
+        }
+        );
+    }
+    
     private void controlarJogo(int posicaoDesejada) {
         try {
             if (tabuleiro.tentarMoverAnimal(posicaoDesejada)) {
@@ -386,7 +535,108 @@ public class TelaJogo extends javax.swing.JFrame {
             mensagemDeJogadaInvalida(e.getMessage());
         }
     }
+    
+    private void configurarTeclas() {
+        addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
 
+                if(comandosAtivados){
+                    switch (e.getKeyCode()) {
+                        case KeyEvent.VK_W -> controlarJogo(0);
+                        case KeyEvent.VK_A -> controlarJogo(1);
+                        case KeyEvent.VK_S -> controlarJogo(2);
+                        case KeyEvent.VK_D -> controlarJogo(3);
+                        case KeyEvent.VK_Z -> controlarJogo(4);
+                        case KeyEvent.VK_X -> controlarJogo(5);
+                    }
+                }
+            }
+        });
+    }
+    
+    // Configurações de Aparência -->
+    private void configurarFontes() {
+        util.setarFont(btnJogo, 14f, font8Bit);
+        util.setarFont(btnAutoria, 14f, font8Bit);
+        labelsPosicoes.forEach(lbl -> {
+            util.setarFont(lbl, 24f, font8Bit);
+            lbl.setBackground(Color.red);
+        });
+    }
+
+    private void configurarLabelRodadas() {
+        util.setarFont(labelRodadas, 24f, font8Bit);
+        labelRodadas.setForeground(util.COR_TEXTO);
+        labelRodadas.setBounds(getWidth() - 120, 0, 120, 60);
+        panelComImagem.add(labelRodadas);
+    }
+
+    private void configurarJPanelComImagem() {
+        getContentPane().setLayout(new BorderLayout());
+        getContentPane().add(panelComImagem, BorderLayout.CENTER);
+        revalidate();
+        repaint();
+    }
+
+    private void tornarLabelsCirculares() {
+        configurarLabel(posicao0);
+        configurarLabel(posicao1);
+        configurarLabel(posicao2);
+        configurarLabel(posicao3);
+        configurarLabel(posicao4);
+        configurarLabel(posicao5);
+    }
+
+    private void configurarLabel(JLabel label) {
+        label.setPreferredSize(new Dimension(50, 50));
+        label.setForeground(Color.white);
+        label.setBorder(new BordaCircular());
+    }
+
+    private void configurarLabelAnimalJogada() {
+        util.setarFont(labelAnimalJogada, 24f, font8Bit);
+        labelAnimalJogada.setBounds(225, 0, 450, 60);
+        labelAnimalJogada.setForeground(util.COR_TEXTO);
+        panelComImagem.add(labelAnimalJogada);
+    }
+    
+    private void setarCorDaBordaLabelPosicao(JLabel label, Color cor) {
+        label.setForeground(cor);
+    }
+    
+    private void removerCorDaBordaDosLabelsPosicao() {
+        labelsPosicoes.forEach(lbl -> {
+            lbl.setForeground(Color.black);
+        });
+    }
+    
+    private void limparImagemDosLabels() {
+        labelsPosicoes.forEach(l -> l.setIcon(null));
+    }
+    
+    private void setarImagemCabrito(int posicao) {
+        JLabel label = labelsPosicoes.get(posicao);
+        label.setText("");
+        limparImagemDosLabels();
+        Image icon = new ImageIcon(getClass().getResource("/resources/imgs/cabra.png")).
+                getImage().
+                getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+
+        label.setIcon(new ImageIcon(icon));
+    }
+
+    private void setarImagemCarcara(int posicao) {
+        JLabel label = labelsPosicoes.get(posicao);
+        label.setText("");
+        label.setIcon(null);
+        Image icon = new ImageIcon(getClass().getResource("/resources/imgs/carcara.png")).
+                getImage().
+                getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+
+        label.setIcon(new ImageIcon(icon));
+    }
+    
     private void mensagemDeJogadaInvalida(String mensagem) {
         JPanel glass = (JPanel) getGlassPane();
         glass.setLayout(new BorderLayout());
@@ -473,218 +723,13 @@ public class TelaJogo extends javax.swing.JFrame {
             }
         }
     }
-
-    private void panelTabuleiroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelTabuleiroMouseClicked
-        System.out.println(evt.getPoint());
-    }//GEN-LAST:event_panelTabuleiroMouseClicked
-
-    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
-
-    }//GEN-LAST:event_formKeyPressed
-
-    private void btnMenuEntered(JMenu btn) {
-        btn.setForeground(new Color(247, 178, 104));
-
-//        util.setarFont(btn, 16f, font8Bit);
-    }
-
-    private void btnMenuExited(JMenu btn) {
-        btn.setForeground(Color.white);
-//        util.setarFont(btn, 14f, font8Bit);
-    }
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new TelaJogo().setVisible(true));
-    }
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu btnAutoria;
-    private javax.swing.JMenu btnJogo;
-    private javax.swing.JDialog jDialog1;
-    private javax.swing.JMenuBar menuBar;
-    private javax.swing.JPanel panelTabuleiro;
-    private javax.swing.JLabel posicao0;
-    private javax.swing.JLabel posicao1;
-    private javax.swing.JLabel posicao2;
-    private javax.swing.JLabel posicao3;
-    private javax.swing.JLabel posicao4;
-    private javax.swing.JLabel posicao5;
-    // End of variables declaration//GEN-END:variables
-
-    private void configurarBotoesMenuJogo() {
-        JButton btnVoltar = new BtnDefault(24f, util.COR_FUNDO_BTN, "Voltar", new Dimension(300, 70));
-        JButton btnReiniciar = new BtnDefault(24f, util.COR_FUNDO_BTN, "Reiniciar", new Dimension(300, 70));
-        JButton btnSair = new BtnDefault(24f, util.COR_FUNDO_BTN, "Sair", new Dimension(300, 70));
-
-        PainelCentralizado panel = new PainelCentralizado(List.of(
-                btnVoltar, btnReiniciar, btnSair
-        ));
-
-        panel.setBackground(util.COR_FUNDO);
-        this.setContentPane(panel);
-        this.revalidate();
-        this.repaint();
-
-        btnVoltar.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                setContentPane(containerInicial);
-                revalidate();
-                repaint();
-            }
-        }
-        );
-
-        btnReiniciar.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                TelaJogo TJ = new TelaJogo();
-                TJ.setVisible(true);
-                dispose();
-            }
-        }
-        );
-
-        btnSair.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                dispose();
-            }
-        }
-        );
-    }
-
-    private void configurarFontes() {
-        util.setarFont(btnJogo, 14f, font8Bit);
-        util.setarFont(btnAutoria, 14f, font8Bit);
-        labelsPosicoes.forEach(lbl -> {
-            util.setarFont(lbl, 24f, font8Bit);
-            lbl.setBackground(Color.red);
-        });
-    }
-
-    private void configurarLabelRodadas() {
-        util.setarFont(labelRodadas, 24f, font8Bit);
-        labelRodadas.setForeground(util.COR_TEXTO);
-        labelRodadas.setBounds(getWidth() - 120, 0, 120, 60);
-        panelComImagem.add(labelRodadas);
-    }
-
-    private void configurarJPanelComImagem() {
-        getContentPane().setLayout(new BorderLayout());
-        getContentPane().add(panelComImagem, BorderLayout.CENTER);
-        revalidate();
-        repaint();
-    }
-
-    private void configurarMenuBar() {
-        FlowLayout fl = new FlowLayout(FlowLayout.RIGHT);
-        fl.setVgap(18);
-        fl.setHgap(20);
-        menuBar.setLayout(fl);
-        menuBar.setBackground(util.COR_FUNDO_MENU_BAR);
-
-        menuBar.setBorder(new MatteBorder(0, 0, 2, 0, new Color(63, 66, 85)));
-        menuBar.setPreferredSize(new Dimension(menuBar.getWidth(), 50));
-
-        btnJogo.setForeground(Color.WHITE);
-
-        btnJogo.setBorder(new EmptyBorder(0, 0, 0, 0));
-        btnAutoria.setForeground(Color.WHITE);
-        btnAutoria.setBorder(new EmptyBorder(0, 0, 0, 0));
-    }
-
-    private void tornarLabelsCirculares() {
-        configurarLabel(posicao0);
-        configurarLabel(posicao1);
-        configurarLabel(posicao2);
-        configurarLabel(posicao3);
-        configurarLabel(posicao4);
-        configurarLabel(posicao5);
-    }
-
-    private void configurarLabel(JLabel label) {
-        label.setPreferredSize(new Dimension(50, 50));
-        label.setForeground(Color.white);
-        label.setBorder(new BordaCircular());
-//        label.setIcon(null);
-    }
-
-    private void configurarLabelAnimalJogada() {
-        util.setarFont(labelAnimalJogada, 24f, font8Bit);
-        labelAnimalJogada.setBounds(225, 0, 450, 60);
-        labelAnimalJogada.setForeground(util.COR_TEXTO);
-        panelComImagem.add(labelAnimalJogada);
-    }
-
-    private void configurarBtnSuperPulo() {
-        BtnDefault btnSuperPulo = new BtnDefault(12f, util.COR_FUNDO_BTN, "SUPER PULO", new Dimension(40, 40));
-        btnSuperPulo.setBounds(325, 460, 150, 60);
-        panelComImagem.add(btnSuperPulo);
-    }
-
-    public void reposicionarAnimais() {
-        posicao0.setText("");
-        posicao1.setText("");
-        posicao2.setText("");
-        posicao3.setText("");
-        posicao4.setText("");
-        posicao5.setText("");
-        util.setarFont(posicao5, 12f, font8Bit);
-        repaint();
-        revalidate();
-
-        int posicaoCarcara = tabuleiro.getPosicoes().indexOf(tabuleiro.obterPosicaoCarcara());
-        int posicaoCabrito = tabuleiro.getPosicoes().indexOf(tabuleiro.obterPosicaoCabrito());
-
-        setarImagemCabrito(posicaoCabrito);
-        setarImagemCarcara(posicaoCarcara);
-        revalidate();
-        repaint();
-    }
-
+    
+    
+    
+    
+    // Outros
     private void setarTexto(int posicao, String nomeAnimal) {
         labelsPosicoes.get(posicao).setText(nomeAnimal);
-    }
-
-    private void setarCorDaBordaLabelPosicao(JLabel label, Color cor) {
-        label.setForeground(cor);
-    }
-
-    private void removerCorDaBordaDosLabelsPosicao() {
-        labelsPosicoes.forEach(lbl -> {
-            lbl.setForeground(Color.black);
-        });
-    }
-
-    private void limparImagemDosLabels() {
-        labelsPosicoes.forEach(l -> l.setIcon(null));
-    }
-
-    private void setarImagemCabrito(int posicao) {
-        JLabel label = labelsPosicoes.get(posicao);
-        label.setText("");
-        limparImagemDosLabels();
-        Image icon = new ImageIcon(getClass().getResource("/resources/imgs/cabra.png")).
-                getImage().
-                getScaledInstance(40, 40, Image.SCALE_SMOOTH);
-
-        label.setIcon(new ImageIcon(icon));
-    }
-
-    private void setarImagemCarcara(int posicao) {
-        JLabel label = labelsPosicoes.get(posicao);
-        label.setText("");
-        label.setIcon(null);
-        Image icon = new ImageIcon(getClass().getResource("/resources/imgs/carcara.png")).
-                getImage().
-                getScaledInstance(40, 40, Image.SCALE_SMOOTH);
-
-        label.setIcon(new ImageIcon(icon));
     }
 
     private void configurarNomes() {
@@ -735,46 +780,6 @@ public class TelaJogo extends javax.swing.JFrame {
         );
     }
 
-    private void configurarTelaFinalDoJogo() {
-        JButton btnReiniciar = new BtnDefault(24f, util.COR_FUNDO_BTN, "Reiniciar", new Dimension(300, 70));
-        JButton btnSair = new BtnDefault(24f, util.COR_FUNDO_BTN, "Sair", new Dimension(300, 70));
-
-        JLabel labelNomeVencedor = new JLabel("Carcara venceu!");
-        JLabel labelTotalDeJogadas = new JLabel("Total de rodadas: " + tabuleiro.getJogadas());
-
-        PainelCentralizado panel = new PainelCentralizado(List.of(
-                labelNomeVencedor, labelTotalDeJogadas, btnReiniciar, btnSair));
-
-        util.setarFont(labelNomeVencedor, 24f, font8Bit);
-        util.setarFont(labelTotalDeJogadas, 24f, font8Bit);
-
-        labelNomeVencedor.setForeground(Color.white);
-        labelTotalDeJogadas.setForeground(Color.white);
-
-        panel.setBackground(util.COR_FUNDO);
-        this.setContentPane(panel);
-        this.revalidate();
-        this.repaint();
-
-        btnReiniciar.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                TelaJogo TJ = new TelaJogo();
-                TJ.setVisible(true);
-                dispose();
-            }
-        }
-        );
-
-        btnSair.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                dispose();
-            }
-        }
-        );
-    }
-
     private void abrirUrl(String url) {
         Desktop desktop = Desktop.getDesktop();
 
@@ -785,20 +790,5 @@ public class TelaJogo extends javax.swing.JFrame {
         }
     }
 
-    private void configurarTeclas() {
-        addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-
-                switch (e.getKeyCode()) {
-                    case KeyEvent.VK_W -> controlarJogo(0);
-                    case KeyEvent.VK_A -> controlarJogo(1);
-                    case KeyEvent.VK_S -> controlarJogo(2);
-                    case KeyEvent.VK_D -> controlarJogo(3);
-                    case KeyEvent.VK_Z -> controlarJogo(4);
-                    case KeyEvent.VK_X -> controlarJogo(5);
-                }
-            }
-        });
-    }
+    
 }

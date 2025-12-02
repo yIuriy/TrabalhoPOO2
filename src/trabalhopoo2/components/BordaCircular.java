@@ -5,6 +5,7 @@
 package trabalhopoo2.components;
 
 import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -26,7 +27,6 @@ public class BordaCircular implements Border {
         int diametro = Math.min(width, height) - 1;
 
         g2.setStroke(new BasicStroke(3f));
-
         g2.drawOval(x, y, diametro, diametro);
     }
 
