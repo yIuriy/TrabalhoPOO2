@@ -19,7 +19,12 @@ import javax.swing.border.Border;
  * @author Iuri
  */
 public class BordaCircular implements Border {
-
+    
+    private final Color cor;
+    
+    public BordaCircular(Color cor){
+        this.cor = cor;
+    }
     @Override
     public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
         Graphics2D g2 = (Graphics2D) g;
@@ -27,7 +32,10 @@ public class BordaCircular implements Border {
         int diametro = Math.min(width, height) - 1;
 
         g2.setStroke(new BasicStroke(3f));
-        g2.drawOval(x, y, diametro, diametro);
+        g2.setColor(cor);
+        g2.drawOval(x +2, y +2, diametro -3, diametro -3);
+        
+        
     }
 
     @Override

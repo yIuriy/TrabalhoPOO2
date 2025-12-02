@@ -466,9 +466,6 @@ public class TelaJogo extends javax.swing.JFrame {
         posicao3.setText("D");
         posicao4.setText("Z");
         posicao5.setText("X");
-        util.setarFont(posicao5, 12f, font8Bit);
-        repaint();
-        revalidate();
 
         int posicaoCarcara = tabuleiro.getPosicoes().indexOf(tabuleiro.obterPosicaoCarcara());
         int posicaoCabrito = tabuleiro.getPosicoes().indexOf(tabuleiro.obterPosicaoCabrito());
@@ -555,13 +552,14 @@ public class TelaJogo extends javax.swing.JFrame {
         });
     }
     
+    
+    
     // Configurações de Aparência -->
     private void configurarFontes() {
         util.setarFont(btnJogo, 14f, font8Bit);
         util.setarFont(btnAutoria, 14f, font8Bit);
         labelsPosicoes.forEach(lbl -> {
             util.setarFont(lbl, 24f, font8Bit);
-            lbl.setBackground(Color.red);
         });
     }
 
@@ -580,18 +578,20 @@ public class TelaJogo extends javax.swing.JFrame {
     }
 
     private void tornarLabelsCirculares() {
-        configurarLabel(posicao0);
-        configurarLabel(posicao1);
-        configurarLabel(posicao2);
-        configurarLabel(posicao3);
-        configurarLabel(posicao4);
-        configurarLabel(posicao5);
+        //configurarLabel(posicao0, Color.BLUE);
+        //configurarLabel(posicao1, Color.BLUE);
+        //configurarLabel(posicao2, Color.BLUE);
+        //configurarLabel(posicao3, Color.BLUE);
+        //configurarLabel(posicao4, Color.BLUE);
+        //configurarLabel(posicao5, Color.BLUE);
     }
 
-    private void configurarLabel(JLabel label) {
+    private void configurarLabel(JLabel label, Color cor) {
         label.setPreferredSize(new Dimension(50, 50));
-        label.setForeground(Color.white);
-        label.setBorder(new BordaCircular());
+        label.setForeground(Color.blue);
+        label.setBorder(new BordaCircular(cor));
+        //label.setOpaque(true);
+        label.setBackground(Color.white);
     }
 
     private void configurarLabelAnimalJogada() {
@@ -599,16 +599,6 @@ public class TelaJogo extends javax.swing.JFrame {
         labelAnimalJogada.setBounds(225, 0, 450, 60);
         labelAnimalJogada.setForeground(util.COR_TEXTO);
         panelComImagem.add(labelAnimalJogada);
-    }
-    
-    private void setarCorDaBordaLabelPosicao(JLabel label, Color cor) {
-        label.setForeground(cor);
-    }
-    
-    private void removerCorDaBordaDosLabelsPosicao() {
-        labelsPosicoes.forEach(lbl -> {
-            lbl.setForeground(Color.black);
-        });
     }
     
     private void limparImagemDosLabels() {
@@ -699,27 +689,27 @@ public class TelaJogo extends javax.swing.JFrame {
         }
         List<Integer> posicoesValidasNaJogada = posicao.getPosicoesValidas();
 
-        removerCorDaBordaDosLabelsPosicao();
-
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < 6; i++) {
             if (posicoesValidasNaJogada.contains(i)) {
-                setarCorDaBordaLabelPosicao(labelsPosicoes.get(i), util.COR_BORDA_POSICAO_VALIDA);
+                configurarLabel(labelsPosicoes.get(i), util.COR_BORDA_POSICAO_VALIDA);
                 if (animalJogada instanceof Cabrito) {
                     Posicao posCarcara = tabuleiro.obterPosicaoCarcara();
                     Integer indexDoCarcara = tabuleiro.getPosicoes().indexOf(posCarcara);
                     if (indexDoCarcara == i) {
-                        setarCorDaBordaLabelPosicao(labelsPosicoes.get(i), util.COR_BORDA_POSICAO_PERIGOSA);
+                        configurarLabel(labelsPosicoes.get(i), util.COR_BORDA_POSICAO_PERIGOSA);
                     }
                 } else {
                     Posicao posCabrito = tabuleiro.obterPosicaoCabrito();
                     Integer indexDoCabrito = tabuleiro.getPosicoes().indexOf(posCabrito);
                     if (indexDoCabrito == i) {
-                        setarCorDaBordaLabelPosicao(labelsPosicoes.get(i), util.COR_BORDA_POSICAO_PERIGOSA);
+                        configurarLabel(labelsPosicoes.get(i), util.COR_BORDA_POSICAO_PERIGOSA);
                     }
                 }
 
             } else if (i == tabuleiro.getPosicoes().indexOf(posicao)) {
-                setarCorDaBordaLabelPosicao(labelsPosicoes.get(i), util.COR_BORDA_POSICAO_ATUAL);
+                configurarLabel(labelsPosicoes.get(i), util.COR_BORDA_POSICAO_ATUAL);
+            } else{
+                configurarLabel(labelsPosicoes.get(i), Color.BLACK);
             }
         }
     }
