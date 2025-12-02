@@ -319,15 +319,21 @@ public class TelaJogo extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnJogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnJogoMouseClicked
-        configurarBotoesMenuJogo();
+        if(!tabuleiro.getFimJogo()){
+            configurarBotoesMenuJogo();
+        }
     }//GEN-LAST:event_btnJogoMouseClicked
 
     private void btnAutoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAutoriaMouseClicked
-        configurarNomes();
+        if(!tabuleiro.getFimJogo()){
+            configurarNomes();
+        }
     }//GEN-LAST:event_btnAutoriaMouseClicked
 
     private void btnJogoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnJogoMouseEntered
+        if(!tabuleiro.getFimJogo()){
         btnMenuEntered(btnJogo);
+        }
     }//GEN-LAST:event_btnJogoMouseEntered
 
     private void btnJogoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnJogoMouseExited
@@ -335,7 +341,9 @@ public class TelaJogo extends javax.swing.JFrame {
     }//GEN-LAST:event_btnJogoMouseExited
 
     private void btnAutoriaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAutoriaMouseEntered
-        btnMenuEntered(btnAutoria);
+        if(!tabuleiro.getFimJogo()){
+            btnMenuEntered(btnAutoria);
+        }
     }//GEN-LAST:event_btnAutoriaMouseEntered
 
     private void btnAutoriaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAutoriaMouseExited
@@ -519,6 +527,7 @@ public class TelaJogo extends javax.swing.JFrame {
     private void controlarJogo(int posicaoDesejada) {
         try {
             if (tabuleiro.tentarMoverAnimal(posicaoDesejada)) {
+                tabuleiro.incrementarJogada();
                 configurarTelaFinalDoJogo();
             } else {
                 tabuleiro.incrementarJogada();

@@ -22,6 +22,7 @@ public class Tabuleiro {
     private final Carcara carcara = new Carcara();
     private final Cabrito cabrito = new Cabrito();
     private boolean cabritoUsouSuperPulo = false;
+    private boolean fimDoJogo = false;
 
     private int jogadas = 0;
 
@@ -37,6 +38,12 @@ public class Tabuleiro {
         }
     }
 
+    public boolean getFimJogo(){
+        return fimDoJogo;
+    }
+    public void FinalizarJogo(){
+        fimDoJogo = true;
+    }
     public int getJogadas() {
         return this.jogadas;
     }
@@ -89,6 +96,7 @@ public class Tabuleiro {
         }
         if (obterAnimalDaJogada() == carcara && posicoes.get(indexPosicaoDoAnimal).verificarSeJogadaEValida(posicaoDesejada)) {
             if (posicoes.get(posicaoDesejada).getAnimal() == cabrito) {
+                FinalizarJogo();
                 return true;
             }
             posicoes.get(indexPosicaoDoAnimal).setAnimal(null);
