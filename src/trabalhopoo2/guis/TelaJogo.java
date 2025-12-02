@@ -86,7 +86,6 @@ public class TelaJogo extends javax.swing.JFrame {
 
         configurarMenuBar();
         reposicionarAnimais();
-        tornarLabelsCirculares();
         configurarFontes();
 
         labelAnimalJogada = new JLabel();
@@ -577,15 +576,6 @@ public class TelaJogo extends javax.swing.JFrame {
         repaint();
     }
 
-    private void tornarLabelsCirculares() {
-        //configurarLabel(posicao0, Color.BLUE);
-        //configurarLabel(posicao1, Color.BLUE);
-        //configurarLabel(posicao2, Color.BLUE);
-        //configurarLabel(posicao3, Color.BLUE);
-        //configurarLabel(posicao4, Color.BLUE);
-        //configurarLabel(posicao5, Color.BLUE);
-    }
-
     private void configurarLabel(JLabel label, Color cor) {
         label.setPreferredSize(new Dimension(50, 50));
         label.setForeground(Color.blue);
@@ -713,15 +703,7 @@ public class TelaJogo extends javax.swing.JFrame {
             }
         }
     }
-    
-    
-    
-    
-    // Outros
-    private void setarTexto(int posicao, String nomeAnimal) {
-        labelsPosicoes.get(posicao).setText(nomeAnimal);
-    }
-
+ 
     private void configurarNomes() {
         JButton btnVoltar = new BtnDefault(24f, util.COR_FUNDO_BTN, "Voltar", new Dimension(250, 50));
 

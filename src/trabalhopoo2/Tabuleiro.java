@@ -79,10 +79,6 @@ public class Tabuleiro {
         return posicoes;
     }
 
-    private void reposicionarAnimal(int posicaoDeDestino) {
-
-    }
-
     public boolean tentarMoverAnimal(int posicaoDesejada) {
         int indexPosicaoDoAnimal = -1;
         for (int i = 0; i <= 5; i++) {
