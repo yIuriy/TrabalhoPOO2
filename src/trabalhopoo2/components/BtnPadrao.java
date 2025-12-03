@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package trabalhopoo2.components;
 
 import java.awt.Color;
@@ -13,21 +9,14 @@ import javax.swing.JButton;
 import javax.swing.UIManager;
 import trabalhopoo2.utils.Utilitarios;
 
-/**
- *
- * @author Iuri
- */
-public class BtnDefault extends JButton {
+public class BtnPadrao extends JButton {
 
     private final Utilitarios util;
     private final Font font8Bit;
 
-    public BtnDefault(Float fontSize, Color backgroundColor, String text, Dimension size) {
+    public BtnPadrao(Float fontSize, Color backgroundColor, String text, Dimension size) {
         util = new Utilitarios();
         font8Bit = util.configurarFonte8Bit();
-
-        util.setarFont(this, fontSize, font8Bit);
-        util.configurarBotao(this);
 
         this.setForeground(Color.WHITE);
         this.setPreferredSize(size);
@@ -35,9 +24,11 @@ public class BtnDefault extends JButton {
 
         this.setText(text);
 
+        // Manter visual quadrado, sem bordas arrendodadas
         UIManager.put("Button.arc", 0);
         UIManager.put("Component.arc", 0);
 
+        // Adiciona efeitos de "hover"
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
@@ -55,5 +46,12 @@ public class BtnDefault extends JButton {
                 repaint();
             }
         });
+        configurarBotao(fontSize);
+    }
+
+    // Impedir vazamento do this (NetBeans tava reclamando)
+    private void configurarBotao(Float fontSize) {
+        util.setarFonte(this, fontSize, font8Bit);
+        util.configurarBotaoPadrao(this);
     }
 }

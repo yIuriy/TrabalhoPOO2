@@ -1,19 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package trabalhopoo2.utils;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
+import java.io.IOException;
 import javax.swing.JButton;
 
-/**
- *
- * @author Iuri
- */
 public final class Utilitarios {
 
     public final Color COR_TEXTO = new Color(255, 255, 255);
@@ -34,12 +29,11 @@ public final class Utilitarios {
 
     public final Color COR_BORDA_POSICAO_PERIGOSA = new Color(200, 0, 0);
 
-    public final Color COR_FUNDO_MSG_ERRO = new Color(120, 20, 20);
+    public final Color COR_FUNDO_MSG_ERRO = new Color(120, 20, 20, 200);
 
     public final Color COR_TEXTO_MSG_ERRO = new Color(255, 245, 235);
-    
-    public final Color COR_BORDA_MSG_ERRO = new Color(255, 245, 235);
 
+    public final Color COR_BORDA_MSG_ERRO = new Color(255, 245, 235);
 
     public Font configurarFonte8Bit() {
         try {
@@ -50,17 +44,17 @@ public final class Utilitarios {
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(font);
             return font;
-        } catch (Exception e) {
-            System.out.println("ALGO DEU RUIM");
+        } catch (FontFormatException | IOException e) {
+            System.err.println("Erro ao carregar a fonte!" + e.getMessage());
         }
         return null;
     }
 
-    public void setarFont(Component component, float size, Font font) {
+    public void setarFonte(Component component, float size, Font font) {
         component.setFont(font.deriveFont(size));
     }
 
-    public void configurarBotao(JButton button) {
+    public void configurarBotaoPadrao(JButton button) {
         button.setBorderPainted(true);
         button.setFocusPainted(false);
         button.setBorder(javax.swing.BorderFactory.createLineBorder(Color.WHITE, 2));
@@ -68,4 +62,7 @@ public final class Utilitarios {
         button.repaint();
     }
 
+    public void setarCursorMaozinha(Component component) {
+        component.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }
 }

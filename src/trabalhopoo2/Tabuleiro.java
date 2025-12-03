@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package trabalhopoo2;
 
 import java.util.ArrayList;
@@ -12,18 +8,13 @@ import trabalhopoo2.model.Animal;
 import trabalhopoo2.model.Cabrito;
 import trabalhopoo2.model.Carcara;
 
-/**
- *
- * @author
- */
-public class Tabuleiro {
+public final class Tabuleiro {
 
-    private List<Posicao> posicoes = new ArrayList<>();
+    private final List<Posicao> posicoes = new ArrayList<>();
     private final Carcara carcara = new Carcara();
     private final Cabrito cabrito = new Cabrito();
-    private boolean cabritoUsouSuperPulo = false;
+    private boolean cabritoUsouSuperPulo = cabrito.isJaUsouSuperPulo();
     private boolean fimDoJogo = false;
-
     private int jogadas = 0;
 
     public Tabuleiro() {
@@ -38,12 +29,14 @@ public class Tabuleiro {
         }
     }
 
-    public boolean getFimJogo(){
+    public boolean getFimJogo() {
         return fimDoJogo;
     }
-    public void FinalizarJogo(){
+
+    public void finalizarJogo() {
         fimDoJogo = true;
     }
+
     public int getJogadas() {
         return this.jogadas;
     }
@@ -96,13 +89,13 @@ public class Tabuleiro {
         }
         if (obterAnimalDaJogada() == carcara && posicoes.get(indexPosicaoDoAnimal).verificarSeJogadaEValida(posicaoDesejada)) {
             if (posicoes.get(posicaoDesejada).getAnimal() == cabrito) {
-                FinalizarJogo();
+                finalizarJogo();
                 return true;
             }
             posicoes.get(indexPosicaoDoAnimal).setAnimal(null);
             posicoes.get(posicaoDesejada).setAnimal(carcara);
 
-        } else if (obterAnimalDaJogada() == cabrito && (posicoes.get(posicaoDesejada).getAnimal() == null) ) {
+        } else if (obterAnimalDaJogada() == cabrito && (posicoes.get(posicaoDesejada).getAnimal() == null)) {
             if (posicoes.get(indexPosicaoDoAnimal).verificarSeJogadaEValida(posicaoDesejada)) {
 
             } else if (!cabritoUsouSuperPulo) {
@@ -116,12 +109,13 @@ public class Tabuleiro {
 
                 if (resposta == JOptionPane.YES_OPTION) {
                     cabritoUsouSuperPulo = true;
+                    cabrito.setJaUsouSuperPulo(cabritoUsouSuperPulo);
                 } else {
-                    throw new JogadaInvalidaException("Super Pulo cancelado");
+                    // Não muito semântico, mas ia dar muito trabalho refatorar
+                    throw new JogadaInvalidaException("Super Pulo cancelado!");
                 }
-
             } else {
-                throw new JogadaInvalidaException("Cabrito ja usou o super pulo");
+                throw new JogadaInvalidaException("Cabrito já usou o super pulo!");
             }
 
             posicoes.get(indexPosicaoDoAnimal).setAnimal(null);
@@ -129,7 +123,6 @@ public class Tabuleiro {
         } else {
             throw new JogadaInvalidaException("Posição não alcançável ou inválida!");
         }
-
         return false;
     }
 
