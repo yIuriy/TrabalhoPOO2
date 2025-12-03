@@ -1,6 +1,6 @@
 package trabalhopoo2.model;
 
-public class Cabrito extends Animal {
+public final class Cabrito extends Animal {
 
     private boolean jaUsouSuperPulo = false;
 

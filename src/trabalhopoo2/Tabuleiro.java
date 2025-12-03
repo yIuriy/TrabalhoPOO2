@@ -41,6 +41,10 @@ public final class Tabuleiro {
         return this.jogadas;
     }
 
+    public boolean isCabritoUsouSuperPulo() {
+        return cabritoUsouSuperPulo;
+    }
+
     public void incrementarJogada() {
         jogadas++;
     }

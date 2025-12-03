@@ -2,9 +2,7 @@ package trabalhopoo2.guis;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Container;
-import java.awt.Cursor;
 import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -27,7 +25,6 @@ import javax.swing.JMenu;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
-import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 import trabalhopoo2.Posicao;
@@ -79,11 +76,6 @@ public final class TelaJogo extends javax.swing.JFrame {
         configurarMenuBar();
         reposicionarAnimais();
         configurarFontes();
-        
-        UIManager.put("OptionPane.background", new Color(40, 40, 40));
-        UIManager.put("OptionPane.messageForeground", Color.WHITE);
-        UIManager.put("OptionPane.messageFont", new Font("Arial", Font.BOLD, 16));
-
 
         labelAnimalDaJogada = new JLabel();
         configurarLabelAnimalDaJogada();
@@ -439,32 +431,45 @@ public final class TelaJogo extends javax.swing.JFrame {
         labelAnimalDaJogada.setText(textoBase + nomeDeExibicao);
     }
 
-    private void setarCorNasBordasConformePosicoesValidasEInvalidas(Animal animalJogada) {
-        Posicao posicao;
-        if (animalJogada instanceof Cabrito) {
-            posicao = tabuleiro.obterPosicaoCabrito();
-        } else {
-            posicao = tabuleiro.obterPosicaoCarcara();
+    private void setarCorNasBordasConformePosicoesValidasEInvalidas(Animal animalDaJogada) {
+        Posicao posicaoAtual = animalDaJogada instanceof Cabrito
+                ? tabuleiro.obterPosicaoCabrito()
+                : tabuleiro.obterPosicaoCarcara();
+
+        List<Integer> posicoesValidasNaJogada = posicaoAtual.getPosicoesValidas();
+
+        Posicao posCabrito = tabuleiro.obterPosicaoCabrito();
+        Integer indexDoCabrito = tabuleiro.getPosicoes().indexOf(posCabrito);
+
+        Posicao posCarcara = tabuleiro.obterPosicaoCarcara();
+        Integer indexDoCarcara = tabuleiro.getPosicoes().indexOf(posCarcara);
+
+        if (animalDaJogada instanceof Cabrito && !tabuleiro.isCabritoUsouSuperPulo()) {
+
+            for (int j = 0; j < 6; j++) {
+                if (j != indexDoCabrito && j != indexDoCarcara) {
+                    configurarLabel(labelsPosicoes.get(j), util.COR_BORDA_POSICAO_VALIDA);
+                }
+            }
+            configurarLabel(labelsPosicoes.get(indexDoCabrito), util.COR_BORDA_POSICAO_ATUAL);
+            configurarLabel(labelsPosicoes.get(indexDoCarcara), util.COR_BORDA_POSICAO_PERIGOSA);
+
+            return;
         }
-        List<Integer> posicoesValidasNaJogada = posicao.getPosicoesValidas();
 
         for (int i = 0; i < 6; i++) {
             if (posicoesValidasNaJogada.contains(i)) {
                 configurarLabel(labelsPosicoes.get(i), util.COR_BORDA_POSICAO_VALIDA);
-                if (animalJogada instanceof Cabrito) {
-                    Posicao posCarcara = tabuleiro.obterPosicaoCarcara();
-                    Integer indexDoCarcara = tabuleiro.getPosicoes().indexOf(posCarcara);
+                if (animalDaJogada instanceof Cabrito) {
                     if (indexDoCarcara == i) {
                         configurarLabel(labelsPosicoes.get(i), util.COR_BORDA_POSICAO_PERIGOSA);
                     }
                 } else {
-                    Posicao posCabrito = tabuleiro.obterPosicaoCabrito();
-                    Integer indexDoCabrito = tabuleiro.getPosicoes().indexOf(posCabrito);
                     if (indexDoCabrito == i) {
                         configurarLabel(labelsPosicoes.get(i), util.COR_BORDA_POSICAO_PERIGOSA);
                     }
                 }
-            } else if (i == tabuleiro.getPosicoes().indexOf(posicao)) {
+            } else if (i == tabuleiro.getPosicoes().indexOf(posicaoAtual)) {
                 configurarLabel(labelsPosicoes.get(i), util.COR_BORDA_POSICAO_ATUAL);
             } else {
                 configurarLabel(labelsPosicoes.get(i), Color.BLACK);
