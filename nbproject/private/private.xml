@@ -2,6 +2,22 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/lucik/Faculdade/2_Semestre/POO/TrabalhoPOO2/src/trabalhopoo2/guis/TelaJogo.java</file>
+            <file>file:/C:/Users/lucik/Faculdade/2_Semestre/POO/TrabalhoPOO2/src/trabalhopoo2/Tabuleiro.java</file>
+            <file>file:/C:/Users/lucik/Faculdade/2_Semestre/POO/TrabalhoPOO2/src/trabalhopoo2/utils/Utilitarios.java</file>
+            <file>file:/C:/Users/lucik/Faculdade/2_Semestre/POO/TrabalhoPOO2/src/trabalhopoo2/components/Linha.java</file>
+            <file>file:/C:/Users/lucik/Faculdade/2_Semestre/POO/TrabalhoPOO2/src/trabalhopoo2/components/BtnPadrao.java</file>
+            <file>file:/C:/Users/lucik/Faculdade/2_Semestre/POO/TrabalhoPOO2/src/trabalhopoo2/components/BordaCircular.java</file>
+            <file>file:/C:/Users/lucik/Faculdade/2_Semestre/POO/TrabalhoPOO2/src/trabalhopoo2/components/JPanelComImagemDeFundo.java</file>
+            <file>file:/C:/Users/lucik/Faculdade/2_Semestre/POO/TrabalhoPOO2/src/trabalhopoo2/components/MenuItem.java</file>
+            <file>file:/C:/Users/lucik/Faculdade/2_Semestre/POO/TrabalhoPOO2/src/trabalhopoo2/components/PainelCentralizado.java</file>
+            <file>file:/C:/Users/lucik/Faculdade/2_Semestre/POO/TrabalhoPOO2/src/trabalhopoo2/exceptions/JogadaInvalidaException.java</file>
+            <file>file:/C:/Users/lucik/Faculdade/2_Semestre/POO/TrabalhoPOO2/src/trabalhopoo2/guis/TelaInicio.java</file>
+            <file>file:/C:/Users/lucik/Faculdade/2_Semestre/POO/TrabalhoPOO2/src/trabalhopoo2/model/Animal.java</file>
+            <file>file:/C:/Users/lucik/Faculdade/2_Semestre/POO/TrabalhoPOO2/src/trabalhopoo2/model/Cabrito.java</file>
+            <file>file:/C:/Users/lucik/Faculdade/2_Semestre/POO/TrabalhoPOO2/src/trabalhopoo2/model/Carcara.java</file>
+            <file>file:/C:/Users/lucik/Faculdade/2_Semestre/POO/TrabalhoPOO2/src/trabalhopoo2/Posicao.java</file>
+        </group>
     </open-files>
 </project-private>

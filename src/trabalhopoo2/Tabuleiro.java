@@ -8,7 +8,7 @@ import trabalhopoo2.model.Animal;
 import trabalhopoo2.model.Cabrito;
 import trabalhopoo2.model.Carcara;
 
-public final class Tabuleiro {
+public final class Tabuleiro { 
 
     private final List<Posicao> posicoes = new ArrayList<>();
     private final Carcara carcara = new Carcara();
@@ -21,7 +21,7 @@ public final class Tabuleiro {
         configurarPosicoes();
     }
 
-    public Animal obterAnimalDaJogada() {
+    public Animal obterAnimalDaJogada() { // Sempre o cabrito começa
         if (jogadas % 2 == 0) {
             return cabrito;
         } else {
@@ -49,7 +49,7 @@ public final class Tabuleiro {
         jogadas++;
     }
 
-    private void configurarPosicoes() {
+    private void configurarPosicoes() { // Configura quais posições são válidas para cada posição, depois, seta os animais em suas posições iniciais
         posicoes.add(new Posicao(List.of(1, 2, 3))); // 0
         posicoes.add(new Posicao(List.of(0, 4))); // 1
         posicoes.add(new Posicao(List.of(0, 4, 5))); // 2
@@ -61,7 +61,7 @@ public final class Tabuleiro {
         posicoes.get(1).setAnimal(carcara);
     }
 
-    public Posicao obterPosicaoCabrito() {
+    public Posicao obterPosicaoCabrito() { 
         for (Posicao posicao : posicoes) {
             if (posicao.getAnimal() instanceof Cabrito) {
                 return posicao;
@@ -82,8 +82,12 @@ public final class Tabuleiro {
     public List<Posicao> getPosicoes() {
         return posicoes;
     }
-
-    public boolean tentarMoverAnimal(int posicaoDesejada) {
+    
+    // Tenta mover o animal, também contempla a mecânica de super pulo
+    // Lança exceções de jogada inválida caso necessário
+    // Returna true caso o carcara tenha capturado o cabrito
+    // Returna false caso contrário, continuando o jogo normalmente
+    public boolean tentarMoverAnimal(int posicaoDesejada) { 
         int indexPosicaoDoAnimal = -1;
         for (int i = 0; i <= 5; i++) {
             if (posicoes.get(i).getAnimal() == obterAnimalDaJogada()) {
@@ -129,5 +133,4 @@ public final class Tabuleiro {
         }
         return false;
     }
-
 }

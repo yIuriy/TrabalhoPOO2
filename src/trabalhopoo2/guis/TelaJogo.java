@@ -773,7 +773,7 @@ public final class TelaJogo extends javax.swing.JFrame {
         );
     }
 
-     // Configura e mostra a tela final do jogo, exibindo o número de rodadas, quem venceu(sempre o Carcara) e um botao de reiniciar
+     // Configura e mostra a tela final do jogo, exibindo o número de rodadas, quem venceu(sempre o Carcara) e um botao de reiniciar e sair
     private void configurarTelaFinalDoJogo() {
         comandosAtivados = false;
         JButton btnReiniciar = criarBotaoPadraoParaMenuJogo("Reiniciar", new Dimension(300, 70));
