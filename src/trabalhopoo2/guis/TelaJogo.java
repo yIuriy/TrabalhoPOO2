@@ -32,6 +32,7 @@ import trabalhopoo2.Tabuleiro;
 import trabalhopoo2.components.BordaCircular;
 import trabalhopoo2.components.BtnPadrao;
 import trabalhopoo2.components.JPanelComImagemDeFundo;
+import trabalhopoo2.components.Linha;
 import trabalhopoo2.components.PainelCentralizado;
 import trabalhopoo2.exceptions.JogadaInvalidaException;
 import trabalhopoo2.model.Animal;
@@ -46,18 +47,20 @@ public final class TelaJogo extends javax.swing.JFrame {
     private final Utilitarios util;
     private final Container containerInicial;
     private final JPanelComImagemDeFundo panelComImagem;
-    private final JLabel labelAnimalDaJogada;
+    private final JLabel labelAnimalDaJogada = new JLabel();
     private JPanel panelContainerMensagem;
     private Timer timerMensagemDeAlerta;
-    private final JLabel labelJogadas;
+    private final JLabel labelJogadas = new JLabel("", SwingConstants.CENTER);
     private boolean comandosAtivados;
+    private final String imagem_fundo_tela_jogo = "/resources/imgs/montanha.png";
+    private final String imagem_fundo_menu_botoes = "/resources/imgs/fundo_menu_botoes.png";
 
     public TelaJogo() {
         util = Utilitarios.getInstance();
         tabuleiro = new Tabuleiro();
 
         initComponents();
-        containerInicial = getContentPane();
+        containerInicial = getContentPane(); // Pega referência do JPanel inicial
         font8Bit = util.configurarFonte8Bit();
 
         labelsPosicoes.addAll(
@@ -68,25 +71,25 @@ public final class TelaJogo extends javax.swing.JFrame {
                         posicao4,
                         posicao5)
         );
+        // Adiciona os labels numa lista de labels, permitindo trabalhar via index
+        // Cada label é uma "casa" do tabuleiro
 
-        panelComImagem = new JPanelComImagemDeFundo(new ImageIcon(getClass().getResource("/resources/imgs/montanha_com_linhas.png")));
+        configurarLinhas();
+
+        panelComImagem = new JPanelComImagemDeFundo(imagem_fundo_tela_jogo);
         configurarJPanelComImagem();
-        panelComImagem.setLayout(null);
 
         configurarMenuBar();
-        reposicionarAnimais();
+        reposicionarAnimais(); // Nesse contexto, inicializa os animais em suas devidas posições
         configurarFontes();
 
-        labelAnimalDaJogada = new JLabel();
         configurarLabelAnimalDaJogada();
-        setarTextoAnimalDaJogada();
+        setarTextoAnimalDaJogada(); // Seta o texto no label conforme o animal da jogada, sempre começa no Cabrito
 
-        labelJogadas = new JLabel("", SwingConstants.CENTER);
         configurarLabelJogadas();
-        setarTextoNumeroJogada();
+        setarTextoNumeroJogada(); // Seta o texto no label conforme a jogada atual, uma jogada só é incrementada quando um animal realiza uma jogada válida
 
-        panelTabuleiro.setBorder(new EmptyBorder(5, 5, 5, 5));
-        panelTabuleiro.setOpaque(false);
+        configurarPanelTabuleiro();
 
         setarCorNasBordasConformePosicoesValidasEInvalidas(tabuleiro.obterAnimalDaJogada());
 
@@ -95,6 +98,26 @@ public final class TelaJogo extends javax.swing.JFrame {
         requestFocusInWindow();
         comandosAtivados = true;
         configurarTeclas();
+    }
+
+    // Configura as linhas conectando os labels do tabuleiro, as coordenadas foram achadas depois de vários testes
+    private void configurarLinhas() {
+        List<Linha> linhas = List.of(
+                new Linha(410, 120, 287, 201),
+                new Linha(470, 120, 585, 201),
+                new Linha(440, 150, 440, 228),
+                new Linha(422, 280, 364, 350),
+                new Linha(458, 280, 506, 350),
+                new Linha(269, 239, 312, 343),
+                new Linha(605, 239, 559, 343),
+                new Linha(368, 363, 505, 363)
+        );
+
+        linhas.forEach(linha -> {
+            getContentPane().add(linha);
+        });
+        getContentPane().repaint();
+        getContentPane().revalidate();
     }
 
     @SuppressWarnings("unchecked")
@@ -330,35 +353,35 @@ public final class TelaJogo extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAutoriaMouseExited
 
     private void posicao5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_posicao5MouseClicked
-        TentarMover(5);
+        tentarMover(5);
     }//GEN-LAST:event_posicao5MouseClicked
 
     private void posicao3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_posicao3MouseClicked
-        TentarMover(3);
+        tentarMover(3);
     }//GEN-LAST:event_posicao3MouseClicked
 
     private void posicao4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_posicao4MouseClicked
-        TentarMover(4);
+        tentarMover(4);
     }//GEN-LAST:event_posicao4MouseClicked
 
     private void posicao2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_posicao2MouseClicked
-        TentarMover(2);
+        tentarMover(2);
     }//GEN-LAST:event_posicao2MouseClicked
 
     private void posicao1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_posicao1MouseClicked
-        TentarMover(1);
+        tentarMover(1);
     }//GEN-LAST:event_posicao1MouseClicked
 
     private void posicao0MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_posicao0MouseClicked
-        TentarMover(0);
+        tentarMover(0);
     }//GEN-LAST:event_posicao0MouseClicked
 
-    private void btnMenuEntered(JMenu btn) {
-        btn.setForeground(new Color(247, 178, 104));
+    private void btnMenuEntered(JMenu botao) {
+        botao.setForeground(new Color(247, 178, 104));
     }
 
-    private void btnMenuExited(JMenu btn) {
-        btn.setForeground(Color.white);
+    private void btnMenuExited(JMenu botao) {
+        botao.setForeground(Color.white);
     }
 
     public static void main(String args[]) {
@@ -384,39 +407,43 @@ public final class TelaJogo extends javax.swing.JFrame {
         return new BtnPadrao(24f, util.COR_FUNDO_BTN, texto, tamanho);
     }
 
-    private void abrirUrl(String url) {
+    private void abrirUrl(String url) { // Abre uma url, no caso, a dos perfis do Git Hub
         Desktop desktop = Desktop.getDesktop();
         try {
             desktop.browse(new URI(url));
         } catch (IOException | URISyntaxException ex) {
-            System.getLogger(TelaJogo.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            System.err.println("Não foi possível abrir a URL fornecida!");
         }
     }
 
-    private void limparImagemDosLabels() {
+    private void limparImagemDosLabels() { // Limpa a imagem de todos os labels
         labelsPosicoes.forEach(l -> l.setIcon(null));
     }
 
-    private void setarImagemCabrito(int posicao) {
-        JLabel label = labelsPosicoes.get(posicao);
+    private void setarImagemCabrito(int posicaoDoCabrito) { // Muda a imagem do label em que o cabrito está
+        JLabel label = labelsPosicoes.get(posicaoDoCabrito);
         label.setText("");
-        limparImagemDosLabels();
-        Image icon = new ImageIcon(getClass().getResource("/resources/imgs/cabra.png")).
-                getImage().
-                getScaledInstance(40, 40, Image.SCALE_SMOOTH);
-
-        label.setIcon(new ImageIcon(icon));
+        try { // Garante que o jogo vai rodar, mesmo se a imagem não for achada, pondo uma letra no lugar
+            Image icon = new ImageIcon(getClass().getResource("/resources/imgs/cabra.png")).
+                    getImage().
+                    getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+            label.setIcon(new ImageIcon(icon));
+        } catch (NullPointerException e) {
+            label.setText("Ca");
+        }
     }
 
-    private void setarImagemCarcara(int posicao) {
-        JLabel label = labelsPosicoes.get(posicao);
+    private void setarImagemCarcara(int posicaoDoCarcara) { // Muda a imagem do label em que o carcara está
+        JLabel label = labelsPosicoes.get(posicaoDoCarcara);
         label.setText("");
-        label.setIcon(null);
-        Image icon = new ImageIcon(getClass().getResource("/resources/imgs/carcara.png")).
-                getImage().
-                getScaledInstance(40, 40, Image.SCALE_SMOOTH);
-
-        label.setIcon(new ImageIcon(icon));
+        try { // Garante que o jogo vai rodar, mesmo se a imagem não for achada, pondo uma letra no lugar
+            Image icon = new ImageIcon(getClass().getResource("/resources/imgs/carcara.png")).
+                    getImage().
+                    getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+            label.setIcon(new ImageIcon(icon));
+        } catch (NullPointerException e) {
+            label.setText("Av");
+        }
     }
 
     private void setarTextoNumeroJogada() {
@@ -431,6 +458,9 @@ public final class TelaJogo extends javax.swing.JFrame {
         labelAnimalDaJogada.setText(textoBase + nomeDeExibicao);
     }
 
+    // Muda a cor das bordas, indicando posições válidas, inválidas e a própria posição do animal
+    // Permite um rápido feedback de onde é possível mover
+    // Acompanha a existência do super pulo do cabrito
     private void setarCorNasBordasConformePosicoesValidasEInvalidas(Animal animalDaJogada) {
         Posicao posicaoAtual = animalDaJogada instanceof Cabrito
                 ? tabuleiro.obterPosicaoCabrito()
@@ -444,8 +474,8 @@ public final class TelaJogo extends javax.swing.JFrame {
         Posicao posCarcara = tabuleiro.obterPosicaoCarcara();
         Integer indexDoCarcara = tabuleiro.getPosicoes().indexOf(posCarcara);
 
+        // Lógica quando o cabrito ainda não usou super pulo
         if (animalDaJogada instanceof Cabrito && !tabuleiro.isCabritoUsouSuperPulo()) {
-
             for (int j = 0; j < 6; j++) {
                 if (j != indexDoCabrito && j != indexDoCarcara) {
                     configurarLabel(labelsPosicoes.get(j), util.COR_BORDA_POSICAO_VALIDA);
@@ -457,6 +487,7 @@ public final class TelaJogo extends javax.swing.JFrame {
             return;
         }
 
+        // Lógica quando o cabrito já usou o super pulo
         for (int i = 0; i < 6; i++) {
             if (posicoesValidasNaJogada.contains(i)) {
                 configurarLabel(labelsPosicoes.get(i), util.COR_BORDA_POSICAO_VALIDA);
@@ -478,6 +509,9 @@ public final class TelaJogo extends javax.swing.JFrame {
     }
 
     // Lógica do Jogo -->
+    // Reposiciona os animais conforme suas posições, setando as imagens deles
+    // Chamado no construtor e a cada jogada
+    // Também seta, em labels vazios, a letra do teclado correspondente àquele label
     public void reposicionarAnimais() {
         posicao0.setText("W");
         posicao1.setText("A");
@@ -489,17 +523,18 @@ public final class TelaJogo extends javax.swing.JFrame {
         int posicaoCarcara = tabuleiro.getPosicoes().indexOf(tabuleiro.obterPosicaoCarcara());
         int posicaoCabrito = tabuleiro.getPosicoes().indexOf(tabuleiro.obterPosicaoCabrito());
 
+        limparImagemDosLabels();
         setarImagemCabrito(posicaoCabrito);
         setarImagemCarcara(posicaoCarcara);
         revalidate();
         repaint();
     }
 
-    private void TentarMover(int posicaoDesejada) {
+    private void tentarMover(int posicaoDesejada) { // Tenta mover um animal
         try {
             if (tabuleiro.tentarMoverAnimal(posicaoDesejada)) {
                 tabuleiro.incrementarJogada();
-                configurarTelaFinalDoJogo();
+                configurarTelaFinalDoJogo(); // Caso chegue aqui, significa que o carcara capturou o cabrito
             } else {
                 tabuleiro.incrementarJogada();
             }
@@ -508,28 +543,28 @@ public final class TelaJogo extends javax.swing.JFrame {
             setarCorNasBordasConformePosicoesValidasEInvalidas(tabuleiro.obterAnimalDaJogada());
             setarTextoNumeroJogada();
         } catch (JogadaInvalidaException e) {
-            criarPopupJogadaInvalida(e.getMessage());
+            criarPopupJogadaInvalida(e.getMessage()); // Mostra uma mensagem com base na mensagem da Exception
         }
     }
 
-    private void configurarTeclas() {
+    private void configurarTeclas() { // Configura os labels para permitir jogar pelas teclas
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (comandosAtivados) {
-                    switch (e.getKeyCode()) {
+                    switch (e.getKeyCode()) { // Utiliza o switch ensinado na aula de tópicos especiais
                         case KeyEvent.VK_W ->
-                            TentarMover(0);
+                            tentarMover(0);
                         case KeyEvent.VK_A ->
-                            TentarMover(1);
+                            tentarMover(1);
                         case KeyEvent.VK_S ->
-                            TentarMover(2);
+                            tentarMover(2);
                         case KeyEvent.VK_D ->
-                            TentarMover(3);
+                            tentarMover(3);
                         case KeyEvent.VK_Z ->
-                            TentarMover(4);
+                            tentarMover(4);
                         case KeyEvent.VK_X ->
-                            TentarMover(5);
+                            tentarMover(5);
                     }
                 }
             }
@@ -537,7 +572,12 @@ public final class TelaJogo extends javax.swing.JFrame {
     }
 
     // Configurações de Elementos -->
-    private void configurarBotoesMenuJogo() {
+    private void configurarPanelTabuleiro() {
+        panelTabuleiro.setBorder(new EmptyBorder(5, 5, 5, 5));
+        panelTabuleiro.setOpaque(false); // Deixa o panel tabuleiro transparente}
+    }
+
+    private void configurarBotoesMenuJogo() { // Configura os botoes da menu bar
         JButton btnVoltar = criarBotaoPadraoParaMenuJogo("Voltar", new Dimension(300, 70));
         util.setarCursorMaozinha(btnVoltar);
         JButton btnReiniciar = criarBotaoPadraoParaMenuJogo("Reiniciar", new Dimension(300, 70));
@@ -545,9 +585,9 @@ public final class TelaJogo extends javax.swing.JFrame {
         JButton btnSair = criarBotaoPadraoParaMenuJogo("Sair", new Dimension(300, 70));
         util.setarCursorMaozinha(btnSair);
 
+        // Cria um panel, que ficará por cima da tela do tabuleiro, mostrando os botoes um embaixo do outro
         PainelCentralizado panel = new PainelCentralizado(List.of(
-                btnVoltar, btnReiniciar, btnSair
-        ), new ImageIcon(getClass().getResource("/resources/imgs/fundo_menu_botoes.png")));
+                btnVoltar, btnReiniciar, btnSair), imagem_fundo_menu_botoes);
 
         this.setContentPane(panel);
         this.revalidate();
@@ -565,7 +605,7 @@ public final class TelaJogo extends javax.swing.JFrame {
 
         btnReiniciar.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void mouseClicked(MouseEvent e) { // Apaga o panel TelaJogo e o cria novamente, fazendo o jogo reiniciar
                 TelaJogo TJ = new TelaJogo();
                 TJ.setVisible(true);
                 dispose();
@@ -582,8 +622,8 @@ public final class TelaJogo extends javax.swing.JFrame {
         );
     }
 
-    private void configurarMenuBar() {
-        FlowLayout fl = new FlowLayout(FlowLayout.RIGHT);
+    private void configurarMenuBar() { // Configura a menu bar
+        FlowLayout fl = new FlowLayout(FlowLayout.RIGHT); // Faz com que os menu items fiquem do lado direito(padrão é esquerdo)
         fl.setVgap(18);
         fl.setHgap(20);
         menuBar.setLayout(fl);
@@ -619,6 +659,7 @@ public final class TelaJogo extends javax.swing.JFrame {
     private void configurarJPanelComImagem() {
         getContentPane().setLayout(new BorderLayout());
         getContentPane().add(panelComImagem, BorderLayout.CENTER);
+        panelComImagem.setLayout(null);
         revalidate();
         repaint();
     }
@@ -672,6 +713,7 @@ public final class TelaJogo extends javax.swing.JFrame {
             timerMensagemDeAlerta.stop();
         }
 
+        // Cria um timer com 3 segundos de duração
         timerMensagemDeAlerta = new javax.swing.Timer(3000, e -> {
             panelContainerMensagem.remove(labelJogadaInvalida);
             getContentPane().remove(panelContainerMensagem);
@@ -683,7 +725,7 @@ public final class TelaJogo extends javax.swing.JFrame {
         timerMensagemDeAlerta.start();
     }
 
-    private void configurarNomes() {
+    private void configurarNomes() { // Configura os componentes que guardam os nossos nomes ao clicar no menuItemd de autoria
         JButton btnVoltar = criarBotaoPadraoParaMenuJogo("Voltar", new Dimension(250, 50));
 
         JLabel labelNomeDyonathan = new JLabel("Dyonathan Bento Laner");
@@ -697,8 +739,7 @@ public final class TelaJogo extends javax.swing.JFrame {
         util.setarCursorMaozinha(labelNomeIuri);
 
         PainelCentralizado panel = new PainelCentralizado(List.of(
-                labelNomeDyonathan, labelNomeIuri, btnVoltar
-        ), new ImageIcon(getClass().getResource("/resources/imgs/fundo_menu_botoes.png")));
+                labelNomeDyonathan, labelNomeIuri, btnVoltar), imagem_fundo_menu_botoes);
 
         panel.setBackground(util.COR_FUNDO);
         this.setContentPane(panel);
@@ -718,7 +759,7 @@ public final class TelaJogo extends javax.swing.JFrame {
         labelNomeDyonathan.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                abrirUrl("https://github.com/dyonathan-laner");
+                abrirUrl("https://github.com/dyonathan-laner"); // Ao clicar em um dos nomes, abre o perfil do GitHub
             }
         }
         );
@@ -726,12 +767,13 @@ public final class TelaJogo extends javax.swing.JFrame {
         labelNomeIuri.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                abrirUrl("https://github.com/yIuriy");
+                abrirUrl("https://github.com/yIuriy"); // Ao clicar em um dos nomes, abre o perfil do GitHub
             }
         }
         );
     }
 
+     // Configura e mostra a tela final do jogo, exibindo o número de rodadas, quem venceu(sempre o Carcara) e um botao de reiniciar
     private void configurarTelaFinalDoJogo() {
         comandosAtivados = false;
         JButton btnReiniciar = criarBotaoPadraoParaMenuJogo("Reiniciar", new Dimension(300, 70));
@@ -743,7 +785,7 @@ public final class TelaJogo extends javax.swing.JFrame {
         JLabel labelTotalDeJogadas = new JLabel("Total de jogadas: " + tabuleiro.getJogadas());
 
         PainelCentralizado panelTelaFinal = new PainelCentralizado(List.of(
-                labelNomeVencedor, labelTotalDeJogadas, btnReiniciar, btnSair), new ImageIcon(getClass().getResource("/resources/imgs/fundo_menu_botoes.png")));
+                labelNomeVencedor, labelTotalDeJogadas, btnReiniciar, btnSair), imagem_fundo_menu_botoes);
 
         util.setarFonte(labelNomeVencedor, 24f, font8Bit);
         util.setarFonte(labelTotalDeJogadas, 24f, font8Bit);

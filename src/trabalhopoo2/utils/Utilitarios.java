@@ -72,7 +72,7 @@ private static Utilitarios utilitarios = null;
         button.repaint();
     }
 
-    public void setarCursorMaozinha(Component component) {
+    public void setarCursorMaozinha(Component component) { // Seta o cursor como HAND_CURSOR, para indicar que algo é clicável
         component.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
 }

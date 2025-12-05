@@ -9,26 +9,26 @@ import javax.swing.JButton;
 import javax.swing.UIManager;
 import trabalhopoo2.utils.Utilitarios;
 
-public class BtnPadrao extends JButton {
+public class BtnPadrao extends JButton { // Um botão utilizado nos menus e nas telas iniciais, devido à frequência de uso, tem classe própria
 
     private final Utilitarios util;
     private final Font font8Bit;
 
-    public BtnPadrao(Float fontSize, Color backgroundColor, String text, Dimension size) {
+    public BtnPadrao(Float tamanhoDaFonte, Color corDeFundo, String texto ,Dimension tamanho) {
         util = Utilitarios.getInstance();
         font8Bit = util.configurarFonte8Bit();
 
         this.setForeground(Color.WHITE);
-        this.setPreferredSize(size);
-        this.setBackground(backgroundColor);
+        this.setPreferredSize(tamanho);
+        this.setBackground(corDeFundo);
 
-        this.setText(text);
+        this.setText(texto);
 
-        // Manter visual quadrado, sem bordas arrendodadas
+        // Manter o visual quadrado, sem bordas arrendodadas
         UIManager.put("Button.arc", 0);
         UIManager.put("Component.arc", 0);
 
-        // Adiciona efeitos de "hover"
+        // Adiciona efeitos de "hover", como no css
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
@@ -46,12 +46,12 @@ public class BtnPadrao extends JButton {
                 repaint();
             }
         });
-        configurarBotao(fontSize);
+        configurarBotao(tamanhoDaFonte);
     }
 
     // Impedir vazamento do this (NetBeans tava reclamando)
-    private void configurarBotao(Float fontSize) {
-        util.setarFonte(this, fontSize, font8Bit);
+    private void configurarBotao(Float tamannhoDaFonte) {
+        util.setarFonte(this, tamannhoDaFonte, font8Bit);
         util.configurarBotaoPadrao(this);
     }
 }

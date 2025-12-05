@@ -8,7 +8,6 @@ import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.GroupLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
@@ -20,25 +19,24 @@ public class TelaInicio extends javax.swing.JFrame {
     private final Font font8Bit;
     private final Utilitarios util;
     private final JPanelComImagemDeFundo panelComImagem;
+    private final String imagem_fundo_tela_inicial = "/resources/imgs/fundo_tela_inicial.png";
 
     public TelaInicio() {
-        util = Utilitarios.getInstance();
+        util = Utilitarios.getInstance(); // Instancia singleton
         font8Bit = util.configurarFonte8Bit();
 
         initComponents();
-        panelComImagem = new JPanelComImagemDeFundo(new ImageIcon(getClass().getResource("/resources/imgs/game_image_menu.png")));
+        panelComImagem = new JPanelComImagemDeFundo(imagem_fundo_tela_inicial);
 
+        // Configura o JPanel personalizado, que possui uma imagem de fundo
         configurarJPanelComImagem();
+        // Configura o título
+        configurarTitulo();
 
         BtnPadrao btnJogar = new BtnPadrao(24f, util.COR_FUNDO_BTN, "Jogar", new Dimension(250, 60));
         btnJogar.setBounds(275, 500, 250, 60); // Necessário para posicionar o botão, já que o layout do pai é null
         util.setarCursorMaozinha(btnJogar);
 
-        util.setarFonte(lblTitulo, 50f, font8Bit);
-        lblTitulo.setForeground(Color.WHITE);
-        lblTitulo.setOpaque(true);
-        lblTitulo.setBackground(new Color(0, 0, 0, 150));
-        panelComImagem.setLayout(null);
         panelComImagem.add(btnJogar);
 
         // Evento de iniciar jogo
@@ -99,7 +97,15 @@ public class TelaInicio extends javax.swing.JFrame {
     private void configurarJPanelComImagem() {
         getContentPane().setLayout(new BorderLayout());
         getContentPane().add(panelComImagem, BorderLayout.CENTER);
+        panelComImagem.setLayout(null);
         revalidate();
         repaint();
+    }
+
+    private void configurarTitulo() {
+        util.setarFonte(lblTitulo, 50f, font8Bit);
+        lblTitulo.setForeground(Color.WHITE);
+        lblTitulo.setOpaque(true);
+        lblTitulo.setBackground(new Color(0, 0, 0, 150));
     }
 }
