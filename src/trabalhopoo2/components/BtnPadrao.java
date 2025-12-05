@@ -15,7 +15,7 @@ public class BtnPadrao extends JButton {
     private final Font font8Bit;
 
     public BtnPadrao(Float fontSize, Color backgroundColor, String text, Dimension size) {
-        util = new Utilitarios();
+        util = Utilitarios.getInstance();
         font8Bit = util.configurarFonte8Bit();
 
         this.setForeground(Color.WHITE);

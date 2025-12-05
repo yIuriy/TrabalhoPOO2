@@ -53,7 +53,7 @@ public final class TelaJogo extends javax.swing.JFrame {
     private boolean comandosAtivados;
 
     public TelaJogo() {
-        util = new Utilitarios();
+        util = Utilitarios.getInstance();
         tabuleiro = new Tabuleiro();
 
         initComponents();
@@ -79,11 +79,11 @@ public final class TelaJogo extends javax.swing.JFrame {
 
         labelAnimalDaJogada = new JLabel();
         configurarLabelAnimalDaJogada();
-        setarTextoConformeAnimalDaJogada();
+        setarTextoAnimalDaJogada();
 
         labelJogadas = new JLabel("", SwingConstants.CENTER);
         configurarLabelJogadas();
-        setarTextoConformeJogada();
+        setarTextoNumeroJogada();
 
         panelTabuleiro.setBorder(new EmptyBorder(5, 5, 5, 5));
         panelTabuleiro.setOpaque(false);
@@ -330,27 +330,27 @@ public final class TelaJogo extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAutoriaMouseExited
 
     private void posicao5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_posicao5MouseClicked
-        controlarJogo(5);
+        TentarMover(5);
     }//GEN-LAST:event_posicao5MouseClicked
 
     private void posicao3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_posicao3MouseClicked
-        controlarJogo(3);
+        TentarMover(3);
     }//GEN-LAST:event_posicao3MouseClicked
 
     private void posicao4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_posicao4MouseClicked
-        controlarJogo(4);
+        TentarMover(4);
     }//GEN-LAST:event_posicao4MouseClicked
 
     private void posicao2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_posicao2MouseClicked
-        controlarJogo(2);
+        TentarMover(2);
     }//GEN-LAST:event_posicao2MouseClicked
 
     private void posicao1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_posicao1MouseClicked
-        controlarJogo(1);
+        TentarMover(1);
     }//GEN-LAST:event_posicao1MouseClicked
 
     private void posicao0MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_posicao0MouseClicked
-        controlarJogo(0);
+        TentarMover(0);
     }//GEN-LAST:event_posicao0MouseClicked
 
     private void btnMenuEntered(JMenu btn) {
@@ -419,12 +419,12 @@ public final class TelaJogo extends javax.swing.JFrame {
         label.setIcon(new ImageIcon(icon));
     }
 
-    private void setarTextoConformeJogada() {
+    private void setarTextoNumeroJogada() {
         Integer jogadaAtual = tabuleiro.getJogadas();
         labelJogadas.setText(jogadaAtual.toString());
     }
 
-    private void setarTextoConformeAnimalDaJogada() {
+    private void setarTextoAnimalDaJogada() {
         String textoBase = "Vez do ";
         Animal animalDaJogada = tabuleiro.obterAnimalDaJogada();
         String nomeDeExibicao = animalDaJogada.getNomeDeExibicao();
@@ -495,7 +495,7 @@ public final class TelaJogo extends javax.swing.JFrame {
         repaint();
     }
 
-    private void controlarJogo(int posicaoDesejada) {
+    private void TentarMover(int posicaoDesejada) {
         try {
             if (tabuleiro.tentarMoverAnimal(posicaoDesejada)) {
                 tabuleiro.incrementarJogada();
@@ -504,9 +504,9 @@ public final class TelaJogo extends javax.swing.JFrame {
                 tabuleiro.incrementarJogada();
             }
             reposicionarAnimais();
-            setarTextoConformeAnimalDaJogada();
+            setarTextoAnimalDaJogada();
             setarCorNasBordasConformePosicoesValidasEInvalidas(tabuleiro.obterAnimalDaJogada());
-            setarTextoConformeJogada();
+            setarTextoNumeroJogada();
         } catch (JogadaInvalidaException e) {
             criarPopupJogadaInvalida(e.getMessage());
         }
@@ -519,17 +519,17 @@ public final class TelaJogo extends javax.swing.JFrame {
                 if (comandosAtivados) {
                     switch (e.getKeyCode()) {
                         case KeyEvent.VK_W ->
-                            controlarJogo(0);
+                            TentarMover(0);
                         case KeyEvent.VK_A ->
-                            controlarJogo(1);
+                            TentarMover(1);
                         case KeyEvent.VK_S ->
-                            controlarJogo(2);
+                            TentarMover(2);
                         case KeyEvent.VK_D ->
-                            controlarJogo(3);
+                            TentarMover(3);
                         case KeyEvent.VK_Z ->
-                            controlarJogo(4);
+                            TentarMover(4);
                         case KeyEvent.VK_X ->
-                            controlarJogo(5);
+                            TentarMover(5);
                     }
                 }
             }
@@ -754,6 +754,7 @@ public final class TelaJogo extends javax.swing.JFrame {
         this.revalidate();
         this.repaint();
 
+        // Ações -->
         btnReiniciar.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -763,7 +764,6 @@ public final class TelaJogo extends javax.swing.JFrame {
             }
         }
         );
-
         btnSair.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {

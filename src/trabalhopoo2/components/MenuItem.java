@@ -11,7 +11,7 @@ public class MenuItem extends JMenuItem {
 
     public MenuItem(String text) {
         super(text);
-        util = new Utilitarios();
+        util = Utilitarios.getInstance();
         font8Bit = util.configurarFonte8Bit();
         this.setVerticalAlignment(CENTER);
         configurarMenuItem();

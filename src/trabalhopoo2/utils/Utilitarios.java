@@ -10,7 +10,17 @@ import java.io.IOException;
 import javax.swing.JButton;
 
 public final class Utilitarios {
-
+private static Utilitarios utilitarios = null;
+    
+    public static Utilitarios getInstance(){
+        if(utilitarios == null){
+            utilitarios = new Utilitarios();
+        }
+        return utilitarios;
+    }
+    private Utilitarios(){   
+    }
+    
     public final Color COR_TEXTO = new Color(255, 255, 255);
 
     public final Color COR_TEXTO_HOVER = new Color(247, 178, 104);

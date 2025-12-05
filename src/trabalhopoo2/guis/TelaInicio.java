@@ -22,7 +22,7 @@ public class TelaInicio extends javax.swing.JFrame {
     private final JPanelComImagemDeFundo panelComImagem;
 
     public TelaInicio() {
-        util = new Utilitarios();
+        util = Utilitarios.getInstance();
         font8Bit = util.configurarFonte8Bit();
 
         initComponents();
