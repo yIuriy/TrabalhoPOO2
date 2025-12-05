@@ -6,6 +6,11 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.util.List;
 
+/**
+ *
+ * @author Iuri da Silva Fernandes
+ * @author Dyonathan Bento Laner
+ */
 public class PainelCentralizado extends JPanelComImagemDeFundo { // Panel que centraliza os itens no meio, utilizado para os menus, tanto de jogo quanto autoria
 
     public PainelCentralizado(List<Component> elementos, String caminhoDaImagem ){

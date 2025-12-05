@@ -3,11 +3,16 @@ package trabalhopoo2;
 import java.util.List;
 import trabalhopoo2.model.Animal;
 
+/**
+ *
+ * @author Iuri da Silva Fernandes
+ * @author Dyonathan Bento Laner
+ */
 public final class Posicao { // Representa uma posição do tabuleiro
 
     private final List<Integer> posicoesValidas; // Armazena as posições em que é permitido se mover a partir da posição
 
-    private Animal animalNaPosicao = null; 
+    private Animal animalNaPosicao = null;
 
     public Posicao(List<Integer> posicoesValidas) {
         this.posicoesValidas = posicoesValidas;

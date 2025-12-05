@@ -9,18 +9,25 @@ import java.awt.GraphicsEnvironment;
 import java.io.IOException;
 import javax.swing.JButton;
 
+/**
+ *
+ * @author Iuri da Silva Fernandes
+ * @author Dyonathan Bento Laner
+ */
 public final class Utilitarios {
-private static Utilitarios utilitarios = null;
-    
-    public static Utilitarios getInstance(){
-        if(utilitarios == null){
+
+    private static Utilitarios utilitarios = null;
+
+    public static Utilitarios getInstance() {
+        if (utilitarios == null) {
             utilitarios = new Utilitarios();
         }
         return utilitarios;
     }
-    private Utilitarios(){   
+
+    private Utilitarios() {
     }
-    
+
     public final Color COR_TEXTO = new Color(255, 255, 255);
 
     public final Color COR_TEXTO_HOVER = new Color(247, 178, 104);
@@ -29,7 +36,7 @@ private static Utilitarios utilitarios = null;
 
     public final Color COR_FUNDO_MENU_BAR = new Color(34, 102, 45);
 
-    public final Color COR_HOVER_BTN = new Color(247, 178, 104); // (38, 210, 62) é outra opção
+    public final Color COR_HOVER_BTN = new Color(247, 178, 104); 
 
     public final Color COR_FUNDO = new Color(20, 150, 20);
 
@@ -55,9 +62,9 @@ private static Utilitarios utilitarios = null;
             ge.registerFont(font);
             return font;
         } catch (FontFormatException | IOException e) {
-            System.err.println("Erro ao carregar a fonte!" + e.getMessage());
+            System.err.println("Erro ao carregar a fonte!" + e.getMessage());  
         }
-        return null;
+        return new Font("Arial", 2, 24); // Caso a fonte personalizada não seja achada, garante que o código vai continuar funcionando
     }
 
     public void setarFonte(Component component, float size, Font font) {

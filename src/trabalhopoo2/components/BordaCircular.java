@@ -9,6 +9,11 @@ import java.awt.Insets;
 import java.awt.RenderingHints;
 import javax.swing.border.Border;
 
+/**
+ *
+ * @author Iuri da Silva Fernandes
+ * @author Dyonathan Bento Laner
+ */
 public final class BordaCircular implements Border { // Necessário para implementar uma borda circular nos labels, implementa a interface Border
 
     private final Color cor;

@@ -6,6 +6,11 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import javax.swing.JComponent;
 
+/**
+ *
+ * @author Iuri da Silva Fernandes
+ * @author Dyonathan Bento Laner
+ */
 public class Linha extends JComponent {
 
     private final int x1;

@@ -1,5 +1,10 @@
 package trabalhopoo2.model;
 
+/**
+ *
+ * @author Iuri da Silva Fernandes
+ * @author Dyonathan Bento Laner
+ */
 public final class Cabrito extends Animal { // Representa o cabrito
 
     private boolean jaUsouSuperPulo = false;

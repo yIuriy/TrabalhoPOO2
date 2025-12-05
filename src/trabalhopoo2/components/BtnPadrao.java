@@ -9,6 +9,11 @@ import javax.swing.JButton;
 import javax.swing.UIManager;
 import trabalhopoo2.utils.Utilitarios;
 
+/**
+ *
+ * @author Iuri da Silva Fernandes
+ * @author Dyonathan Bento Laner
+ */
 public class BtnPadrao extends JButton { // Um botão utilizado nos menus e nas telas iniciais, devido à frequência de uso, tem classe própria
 
     private final Utilitarios util;

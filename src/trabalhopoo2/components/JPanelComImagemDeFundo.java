@@ -6,6 +6,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import trabalhopoo2.utils.Utilitarios;
 
+/**
+ *
+ * @author Iuri da Silva Fernandes
+ * @author Dyonathan Bento Laner
+ */
 public class JPanelComImagemDeFundo extends JPanel { // JPanel personalizado que permite imagem de fundo
 
     private Image imagemDeFundo;

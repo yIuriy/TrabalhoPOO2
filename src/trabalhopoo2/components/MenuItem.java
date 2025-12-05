@@ -4,6 +4,11 @@ import java.awt.Font;
 import javax.swing.JMenuItem;
 import trabalhopoo2.utils.Utilitarios;
 
+/**
+ *
+ * @author Iuri da Silva Fernandes
+ * @author Dyonathan Bento Laner
+ */
 public class MenuItem extends JMenuItem { // Um MenuItem personalizado
 
     private final Font font8Bit;

@@ -39,6 +39,11 @@ import trabalhopoo2.model.Animal;
 import trabalhopoo2.model.Cabrito;
 import trabalhopoo2.utils.Utilitarios;
 
+/**
+ *
+ * @author Iuri da Silva Fernandes
+ * @author Dyonathan Bento Laner
+ */
 public final class TelaJogo extends javax.swing.JFrame {
 
     private final Tabuleiro tabuleiro;
@@ -93,7 +98,7 @@ public final class TelaJogo extends javax.swing.JFrame {
 
         setarCorNasBordasConformePosicoesValidasEInvalidas(tabuleiro.obterAnimalDaJogada());
 
-        // Neccessário para possibilitar jogar pelas teclas
+        // Neccessário para possibilitar jogar pelas teclas -->
         setFocusable(true);
         requestFocusInWindow();
         comandosAtivados = true;
@@ -773,7 +778,7 @@ public final class TelaJogo extends javax.swing.JFrame {
         );
     }
 
-     // Configura e mostra a tela final do jogo, exibindo o número de rodadas, quem venceu(sempre o Carcara) e um botao de reiniciar e sair
+    // Configura e mostra a tela final do jogo, exibindo o número de rodadas, quem venceu(sempre o Carcara) e um botao de reiniciar e sair
     private void configurarTelaFinalDoJogo() {
         comandosAtivados = false;
         JButton btnReiniciar = criarBotaoPadraoParaMenuJogo("Reiniciar", new Dimension(300, 70));

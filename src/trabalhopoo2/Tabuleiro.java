@@ -8,7 +8,12 @@ import trabalhopoo2.model.Animal;
 import trabalhopoo2.model.Cabrito;
 import trabalhopoo2.model.Carcara;
 
-public final class Tabuleiro { 
+/**
+ *
+ * @author Iuri da Silva Fernandes
+ * @author Dyonathan Bento Laner
+ */
+public final class Tabuleiro {
 
     private final List<Posicao> posicoes = new ArrayList<>();
     private final Carcara carcara = new Carcara();
@@ -61,7 +66,7 @@ public final class Tabuleiro {
         posicoes.get(1).setAnimal(carcara);
     }
 
-    public Posicao obterPosicaoCabrito() { 
+    public Posicao obterPosicaoCabrito() {
         for (Posicao posicao : posicoes) {
             if (posicao.getAnimal() instanceof Cabrito) {
                 return posicao;
@@ -82,12 +87,12 @@ public final class Tabuleiro {
     public List<Posicao> getPosicoes() {
         return posicoes;
     }
-    
+
     // Tenta mover o animal, também contempla a mecânica de super pulo
     // Lança exceções de jogada inválida caso necessário
     // Returna true caso o carcara tenha capturado o cabrito
     // Returna false caso contrário, continuando o jogo normalmente
-    public boolean tentarMoverAnimal(int posicaoDesejada) { 
+    public boolean tentarMoverAnimal(int posicaoDesejada) {
         int indexPosicaoDoAnimal = -1;
         for (int i = 0; i <= 5; i++) {
             if (posicoes.get(i).getAnimal() == obterAnimalDaJogada()) {

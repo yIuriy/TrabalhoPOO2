@@ -14,6 +14,11 @@ import javax.swing.WindowConstants;
 import trabalhopoo2.components.BtnPadrao;
 import trabalhopoo2.utils.Utilitarios;
 
+/**
+ *
+ * @author Iuri da Silva Fernandes
+ * @author Dyonathan Bento Laner
+ */
 public class TelaInicio extends javax.swing.JFrame {
 
     private final Font font8Bit;
